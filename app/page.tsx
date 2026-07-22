@@ -17,7 +17,10 @@ import {
   X,
   CheckCircle,
   Clock,
-  Award
+  Award,
+  Leaf,
+  RefreshCw,
+  Wind
 } from "lucide-react";
 
 // Slide Data
@@ -65,8 +68,41 @@ const PRODUCTS = [
 
 
 
+// Industries We Support Data (Hover to change background image)
+const INDUSTRIES_SUPPORTED = [
+  {
+    id: "sodio-lumps",
+    title: "Silicato di Sodio in Lumps",
+    description: "Crucial for industrial manufacturing, chemical processing, and detergent production.",
+    image: "/3.png",
+    icon: Settings
+  },
+  {
+    id: "sodio-liquido",
+    title: "Silicato di Sodio Liquido",
+    description: "Key for adhesive formulations, concrete sealing, and water treatment standards.",
+    image: "/2.jpg",
+    icon: Shield
+  },
+  {
+    id: "potassio-lumps",
+    title: "Silicato di Potassio in Lumps",
+    description: "High temperature resistant binding agent for specialized refractory materials.",
+    image: "/images (1).jpg",
+    icon: Globe
+  },
+  {
+    id: "potassio-liquido",
+    title: "Silicato di Potassio Liquido",
+    description: "High-grade liquid formulation for precision agricultural & industrial applications.",
+    image: "/images.jpg",
+    icon: TrendingUp
+  }
+];
+
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeIndustryIndex, setActiveIndustryIndex] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState("jaw");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("home");
@@ -103,7 +139,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#edf4fa] font-sans selection:bg-[#f58220] selection:text-white">
+    <div className="relative min-h-screen flex flex-col bg-[#edf4fa] font-sans selection:bg-[#facc15] selection:text-slate-950">
 
       {/* Primary Header - Wider Navbar alignment */}
       <header className="sticky top-0 z-40 bg-blue-50 backdrop-blur-md shadow-xs transition-all border-b border-slate-100">
@@ -125,35 +161,35 @@ export default function Home() {
             <a
               href="#home"
               onClick={() => setActiveNav("home")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#0b5c9e] ${activeNav === "home" ? "text-[#0b5c9e] border-b-2 border-[#0b5c9e]" : ""}`}
+              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "home" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
             >
               Home
             </a>
             <a
               href="#about"
               onClick={() => setActiveNav("about")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#0b5c9e] ${activeNav === "about" ? "text-[#0b5c9e] border-b-2 border-[#0b5c9e]" : ""}`}
+              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "about" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
             >
               About
             </a>
             <a
               href="#products"
               onClick={() => setActiveNav("products")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#0b5c9e] ${activeNav === "products" ? "text-[#0b5c9e] border-b-2 border-[#0b5c9e]" : ""}`}
+              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "products" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
             >
               Products
             </a>
             <a
               href="#infrastructure"
               onClick={() => setActiveNav("infrastructure")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#0b5c9e] ${activeNav === "infrastructure" ? "text-[#0b5c9e] border-b-2 border-[#0b5c9e]" : ""}`}
+              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "infrastructure" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
             >
               Infrastructure
             </a>
             <a
               href="#contact"
               onClick={() => setActiveNav("contact")}
-              className="bg-[#f58220] hover:bg-[#d96a14] text-white font-bold px-6 py-2.5 rounded-full shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all text-xs uppercase tracking-wider block"
+              className="bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-6 py-2.5 rounded-full shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all text-xs uppercase tracking-wider block"
             >
               Contact Us
             </a>
@@ -162,7 +198,7 @@ export default function Home() {
           {/* Mobile Menu Icon */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-800 hover:text-[#0b5c9e] transition-colors"
+            className="md:hidden p-2 text-slate-800 hover:text-[#ca8a04] transition-colors"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -175,35 +211,35 @@ export default function Home() {
             <a
               href="#home"
               onClick={() => { setActiveNav("home"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-blue-50 ${activeNav === "home" ? "text-[#0b5c9e] bg-[#edf4fa]" : ""}`}
+              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "home" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
             >
               Home
             </a>
             <a
               href="#about"
               onClick={() => { setActiveNav("about"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-blue-50 ${activeNav === "about" ? "text-[#0b5c9e] bg-[#edf4fa]" : ""}`}
+              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "about" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
             >
               About
             </a>
             <a
               href="#products"
               onClick={() => { setActiveNav("products"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-blue-50 ${activeNav === "products" ? "text-[#0b5c9e] bg-[#edf4fa]" : ""}`}
+              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "products" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
             >
               Products
             </a>
             <a
               href="#infrastructure"
               onClick={() => { setActiveNav("infrastructure"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-blue-50 ${activeNav === "infrastructure" ? "text-[#0b5c9e] bg-[#edf4fa]" : ""}`}
+              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "infrastructure" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
             >
               Infrastructure
             </a>
             <a
               href="#contact"
               onClick={() => { setActiveNav("contact"); setMobileMenuOpen(false); }}
-              className="mt-2 bg-[#f58220] hover:bg-[#d96a14] text-center text-white font-bold p-3 rounded-lg transition-colors uppercase tracking-wider text-sm shadow-md"
+              className="mt-2 bg-[#facc15] hover:bg-[#eab308] text-center text-slate-950 font-extrabold p-3 rounded-lg transition-colors uppercase tracking-wider text-sm shadow-md"
             >
               Contact Us
             </a>
@@ -240,7 +276,7 @@ export default function Home() {
           {/* Slider Left Arrow - Shaded Circle matching styling */}
           <button
             onClick={handlePrevSlide}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-900/60 hover:bg-[#f58220] text-white backdrop-blur-md border border-white/10 hover:border-[#f58220] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-900/60 hover:bg-[#facc15] hover:text-slate-950 text-white backdrop-blur-md border border-white/10 hover:border-[#facc15] hover:scale-105 active:scale-95 transition-all cursor-pointer"
             aria-label="Previous Slide"
           >
             <ChevronLeft size={22} />
@@ -249,7 +285,7 @@ export default function Home() {
           {/* Slider Right Arrow - Shaded Circle matching styling */}
           <button
             onClick={handleNextSlide}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-900/60 hover:bg-[#f58220] text-white backdrop-blur-md border border-white/10 hover:border-[#f58220] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-900/60 hover:bg-[#facc15] hover:text-slate-950 text-white backdrop-blur-md border border-white/10 hover:border-[#facc15] hover:scale-105 active:scale-95 transition-all cursor-pointer"
             aria-label="Next Slide"
           >
             <ChevronRight size={22} />
@@ -268,9 +304,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Highlight Values Sub-bar */}
-
-
         {/* About Section - Deep Blue theme background with 3D Flip Card */}
         <section id="about" className="relative py-20 bg-blue-50 overflow-hidden world-grid-bg">
           {/* Decorative concentric targets inside background */}
@@ -285,32 +318,33 @@ export default function Home() {
 
               {/* Left Column: Narrative & Stats (White blocks) */}
               <div className="lg:col-span-6 space-y-6 text-white">
-                <div>
-                  <span className="inline-block bg-[#ffedd5] text-[#c2410c] font-black text-xs  tracking-widest px-4 py-1.5 rounded-full shadow-sm">
-                    About Us
-                  </span>
-                  <h2 className="text-3xl sm:text-2xl font-bold mt-4 text-black tracking-tight leading-tight">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
+                    <span>About Us</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#0c122c] tracking-tight leading-[1.15] lg:leading-[1.2]">
                     About Volga Asia Company
                   </h2>
                 </div>
 
-                <p className="text-black/90 text-sm sm:text-base leading-relaxed">
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
                   We are a leading manufacturer and supplier of high-performance stone crusher machines, delivering advanced crushing solutions for the construction and mining industries. With years of industry experience, we specialize in designing and manufacturing both mobile crushers and fixed crushing plants that meet the highest standards of quality, durability, and efficiency.
                 </p>
 
-                <p className="text-black/90 text-sm sm:text-base leading-relaxed">
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
                   Our company is committed to providing reliable equipment that helps clients maximize productivity while minimizing operational costs. From small-scale projects to large industrial operations, we offer customized crushing solutions tailored to specific requirements.
                 </p>
 
                 {/* Stats Section with White blocks matching user screenshot */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
                   <div className="bg-white p-6 rounded-2xl shadow-xl hover:scale-102 transition-transform border border-white/10">
-                    <div className="text-3xl font-black text-[#0b5c9e]">20+</div>
+                    <div className="text-3xl font-black text-[#ca8a04]">20+</div>
                     <div className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Years Experience</div>
                   </div>
 
                   <div className="bg-white p-6 rounded-2xl shadow-xl hover:scale-102 transition-transform border border-white/10">
-                    <div className="text-3xl font-black text-[#0b5c9e]">24+</div>
+                    <div className="text-3xl font-black text-[#ca8a04]">24+</div>
                     <div className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Industries Served</div>
                   </div>
                 </div>
@@ -352,18 +386,199 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Industries We Support Section (Transparent Window Card Layout matching Reference Screenshot & Logo Canary Yellow Accent) */}
+        <section className="relative min-h-[550px] sm:min-h-[640px] w-full py-16 sm:py-24 overflow-hidden flex items-center justify-center bg-slate-900 transition-all duration-700">
+          
+          {/* Full-width Background Images with smooth crossfade opacity */}
+          {INDUSTRIES_SUPPORTED.map((item, index) => (
+            <div
+              key={item.id}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+                index === activeIndustryIndex ? "opacity-100 scale-100 z-0" : "opacity-0 scale-105 pointer-events-none"
+              }`}
+            >
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                priority={index === 0}
+                className="object-cover object-center w-full h-full filter brightness-100 transition-transform duration-1000 ease-out"
+              />
+            </div>
+          ))}
+
+          {/* Floating Card with Thick White Outer Frame & Transparent Window Cutout */}
+          <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6">
+            <div className="rounded-[32px] border-[6px] border-white shadow-2xl overflow-hidden bg-transparent flex flex-col md:flex-row min-h-[380px] sm:min-h-[440px]">
+              
+              {/* Left Side: Completely Transparent Window Frame (Section background shows directly through!) */}
+              <div className="flex-1 bg-transparent min-h-[200px] md:min-h-full">
+                {/* Intentionally empty/transparent to reveal the background image beneath */}
+              </div>
+
+              {/* Right Side: Off-white/Cream List Panel matching logo branding */}
+              <div className="w-full md:w-[380px] lg:w-[420px] bg-[#faf8f5] p-6 sm:p-8 flex flex-col justify-center border-t-[6px] md:border-t-0 md:border-l-[6px] border-white">
+                
+                {/* Category Header with Logo Sunburst Yellow Accent Pulse */}
+                <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase mb-5 sm:mb-6">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block animate-pulse shadow-xs shrink-0"></span>
+                  <span>Industries We Support</span>
+                </div>
+
+                {/* Interactive Item List */}
+                <div className="space-y-3.5">
+                  {INDUSTRIES_SUPPORTED.map((item, index) => {
+                    const IconComp = item.icon;
+                    const isActive = index === activeIndustryIndex;
+                    return (
+                      <div
+                        key={item.id}
+                        onMouseEnter={() => setActiveIndustryIndex(index)}
+                        onClick={() => setActiveIndustryIndex(index)}
+                        className={`flex items-center gap-4 p-4 rounded-[28px] cursor-pointer transition-all duration-300 ${
+                          isActive
+                            ? "bg-[#efe9df]"
+                            : "bg-transparent hover:bg-[#efe9df]/50"
+                        }`}
+                      >
+                        {/* Icon Circle (Beige in normal state, White in hovered state) */}
+                        <div
+                          className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                            isActive
+                              ? "bg-white shadow-xs text-[#0b5c9e]"
+                              : "bg-[#efe9df]/85 text-[#0b5c9e]/80"
+                          }`}
+                        >
+                          <IconComp size={20} />
+                        </div>
+
+                        {/* Text Container */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-[15px] sm:text-base font-bold text-[#0c122c] tracking-tight leading-none">
+                            {item.title}
+                          </h3>
+                          {isActive && (
+                            <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-tight font-normal">
+                              {item.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </section>
+
+        {/* Sustainability & Commitment Section (Matching Logo Sunburst Yellow Theme & Exact Screenshot Layout) */}
+        <section className="py-12 sm:py-16 bg-[#edf4fa] relative overflow-hidden border-y border-slate-200/60">
+          <div className="w-full max-w-[95%] lg:max-w-[1550px] mx-auto px-4 sm:px-8 relative z-10">
+            
+            {/* Top Main Grid Row: Image on Left, Content on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              {/* Left Column: Landscape Image */}
+              <div className="lg:col-span-6 relative w-full h-[260px] sm:h-[320px] lg:h-[340px] rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 bg-slate-200">
+                <Image
+                  src="/SUSTAINABILITY.webp"
+                  alt="Costruire un Futuro Sostenibile"
+                  fill
+                  priority
+                  className="object-cover object-center w-full h-full"
+                />
+              </div>
+
+              {/* Right Column: Content styled with Logo Sunburst Yellow Accent (#facc15 / #d97706) */}
+              <div className="lg:col-span-6 space-y-5">
+                
+                {/* Full-width Top Sunburst Yellow Accent Bar matching Reference Screenshot */}
+                <div className="h-2 w-full bg-[#facc15] rounded-full shadow-xs"></div>
+
+                {/* Badge matching logo sunburst yellow palette */}
+                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
+                  <span>Sostenibilità e Responsabilità</span>
+                </div>
+
+                {/* Heading with Logo Sunburst Yellow Text Highlight */}
+                <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#0c122c] tracking-tight leading-[1.15] lg:leading-[1.2]">
+                  Costruire un Futuro Sostenibile — <span className="text-[#b45309] bg-[#fefce8] px-2 py-0.5 rounded-lg border border-[#fef08a] shadow-xs inline-block">Il Nostro Impegno</span>
+                </h2>
+
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
+                  Siamo impegnati in pratiche di produzione ambientalmente responsabili che riducono l'impatto ambientale massimizzando l'efficienza. La nostra attenzione all'innovazione sostenibile aiuta le industrie a ottenere prestazioni migliori con costi ambientali inferiori.
+                </p>
+
+                {/* Primary Logo Sunburst Yellow Action Button */}
+                <div className="pt-1">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-7 py-3 rounded-full transition-all text-xs uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                  >
+                    <span>Visit section</span>
+                    <ArrowRight size={15} />
+                  </a>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Bottom Row: 2 Feature Cards with Sunburst Yellow Icons & Accent Styling */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-slate-200/60">
+              
+              {/* Card 1 */}
+              <div className="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/70 flex items-start gap-4 hover:border-[#facc15]/80 hover:shadow-md transition-all">
+                <div className="w-11 h-11 rounded-xl bg-[#fefce8] text-[#ca8a04] border border-[#fef08a] flex items-center justify-center shrink-0">
+                  <RefreshCw size={22} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-slate-900 text-base">
+                    Efficienza delle Risorse
+                  </h4>
+                  <p className="text-xs text-slate-600 font-medium mt-0.5">
+                    Operazioni ottimizzate
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/70 flex items-start gap-4 hover:border-[#facc15]/80 hover:shadow-md transition-all">
+                <div className="w-11 h-11 rounded-xl bg-[#fefce8] text-[#ca8a04] border border-[#fef08a] flex items-center justify-center shrink-0">
+                  <Wind size={22} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-slate-900 text-base">
+                    Emissioni Ridotte
+                  </h4>
+                  <p className="text-xs text-slate-600 font-medium mt-0.5">
+                    Produzione pulita
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
 
         {/* Interactive Products Section */}
         <section id="products" className="py-20 bg-[#edf4fa] relative">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-[#0b5c9e] font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">
-                Product Catalog
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 text-slate-800 uppercase">
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
+                <span>Product Catalog</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0c122c] tracking-tight leading-[1.15]">
                 Heavy Crushing & Screening Systems
               </h2>
-              <p className="text-sm text-slate-500 mt-2">
+              <p className="text-slate-500 text-sm sm:text-base leading-[1.7]">
                 Engineered with precision for peak operational capability, uniform output grade, and low maintenance cycles.
               </p>
             </div>
@@ -374,7 +589,7 @@ export default function Home() {
                 <button
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod.id)}
-                  className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${selectedProduct === prod.id ? "bg-[#0b5c9e] text-white shadow-md shadow-[#0b5c9e]/20 scale-105" : "bg-white text-slate-750 hover:bg-slate-50"}`}
+                  className={`px-6 py-3 rounded-full font-extrabold text-xs uppercase tracking-wider transition-all cursor-pointer ${selectedProduct === prod.id ? "bg-[#facc15] text-slate-955 shadow-md scale-105" : "bg-white text-slate-750 hover:bg-yellow-50"}`}
                 >
                   {prod.name}
                 </button>
@@ -392,15 +607,15 @@ export default function Home() {
                 >
                   <div className="lg:col-span-7 space-y-6">
                     <div className="flex items-center gap-4">
-                      <div className="bg-blue-50 text-[#0b5c9e] p-4 rounded-2xl">
+                      <div className="bg-[#fefce8] text-[#ca8a04] border border-[#fef08a] p-4 rounded-2xl">
                         <IconComp size={28} />
                       </div>
                       <div>
                         <h3 className="text-2xl font-extrabold text-slate-800">{prod.name}</h3>
-                        <p className="text-xs font-bold text-[#f58220] uppercase tracking-wider mt-0.5">Heavy Industry Grade</p>
+                        <p className="text-xs font-bold text-[#b45309] uppercase tracking-wider mt-0.5">Heavy Industry Grade</p>
                       </div>
                     </div>
-                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
                       {prod.description}
                     </p>
                     <div className="space-y-3">
@@ -416,7 +631,7 @@ export default function Home() {
                     <div className="pt-4 flex flex-wrap gap-4">
                       <a
                         href="#contact"
-                        className="bg-[#f58220] hover:bg-[#d96a14] text-white font-bold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-sm transition-all"
+                        className="bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-md transition-all"
                       >
                         Request Quote & Info
                       </a>
@@ -437,7 +652,7 @@ export default function Home() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4">
-                      <span className="text-[10px] uppercase font-bold tracking-widest bg-[#f58220] text-white px-2 py-0.5 rounded">
+                      <span className="text-[10px] uppercase font-extrabold tracking-widest bg-[#facc15] text-slate-950 px-2.5 py-1 rounded">
                         Manufacturing Setup
                       </span>
                     </div>
@@ -454,23 +669,24 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Text side */}
               <div className="space-y-6">
-                <div>
-                  <span className="text-[#f58220] font-bold text-xs uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full">
-                    Infrastructure & Capabilities
-                  </span>
-                  <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 text-slate-800 uppercase">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
+                    <span>Infrastructure & Capabilities</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0c122c] tracking-tight leading-[1.15]">
                     Precision Engineering & Quality Workmanship
                   </h2>
                 </div>
-                <p className="text-slate-655 leading-relaxed text-sm sm:text-base">
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
                   Volga Asia operates a heavy machining workshop equipped with CNC boring mills, high capacity automatic welding arches, structural steel bending benches, and precise ultrasonic test kits to verify welding integrity inside heavy templates.
                 </p>
 
                 {/* Grid items */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                   <div className="flex gap-3">
-                    <div className="bg-blue-50 text-[#0b5c9e] p-2.5 h-10 w-10 flex items-center justify-center rounded-lg shrink-0">
-                      <Award size={20} className="text-[#0b5c9e]" />
+                    <div className="bg-[#fefce8] text-[#ca8a04] p-2.5 h-10 w-10 flex items-center justify-center rounded-lg shrink-0 border border-[#fef08a]">
+                      <Award size={20} className="text-[#ca8a04]" />
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-800 text-sm">Top-Tier Certification</h4>
@@ -478,8 +694,8 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="bg-orange-50 text-[#f58220] p-2.5 h-10 w-10 flex items-center justify-center rounded-lg shrink-0">
-                      <Clock size={20} className="text-[#f58220]" />
+                    <div className="bg-[#fefce8] text-[#ca8a04] p-2.5 h-10 w-10 flex items-center justify-center rounded-lg shrink-0 border border-[#fef08a]">
+                      <Clock size={20} className="text-[#ca8a04]" />
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-800 text-sm">High Load Capacity</h4>
@@ -529,21 +745,22 @@ export default function Home() {
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none z-0 opacity-20">
             <div className="absolute inset-0 rounded-full border border-white/5"></div>
             <div className="absolute inset-16 rounded-full border border-white/10"></div>
-            <div className="absolute inset-32 rounded-full border border-[#f58220]/25 animate-pulse"></div>
+            <div className="absolute inset-32 rounded-full border border-[#facc15]/30 animate-pulse"></div>
             <div className="absolute inset-48 rounded-full border border-[#0b5c9e]/20"></div>
             <div className="absolute inset-64 rounded-full border border-white/10"></div>
-            <div className="absolute inset-80 rounded-full border-2 border-[#f58220]/15"></div>
+            <div className="absolute inset-80 rounded-full border-2 border-[#facc15]/20"></div>
           </div>
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-[#f58220] font-bold text-xs uppercase tracking-widest bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
-                Global Network
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 text-white uppercase">
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-slate-400 uppercase">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
+                <span>Global Network</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-[1.15]">
                 World Footprint & Target Quality
               </h2>
-              <p className="text-sm text-slate-400 mt-2">
+              <p className="text-slate-400 text-sm sm:text-base leading-[1.7]">
                 Concentric logistics network supplying crusher aggregates, wear spares, and active remote maintenance worldwide.
               </p>
             </div>
@@ -551,19 +768,19 @@ export default function Home() {
             {/* Visualizing target points */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center bg-slate-955 bg-slate-950/40 backdrop-blur-xs p-8 rounded-3xl border border-white/5">
               <div className="space-y-2">
-                <div className="text-3xl font-black text-[#f58220]">Europe</div>
+                <div className="text-3xl font-black text-[#facc15]">Europe</div>
                 <p className="text-xs text-slate-400">Strategic spares storage in Germany & Romania to supply Eastern Europe.</p>
               </div>
               <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
-                <div className="text-3xl font-black text-[#f58220]">Asia-Pacific</div>
+                <div className="text-3xl font-black text-[#facc15]">Asia-Pacific</div>
                 <p className="text-xs text-slate-400 font-sans">Headquarters and prime heavy assembly centers based in Northern India.</p>
               </div>
               <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
-                <div className="text-3xl font-black text-[#f58220]">Middle East</div>
+                <div className="text-3xl font-black text-[#facc15]">Middle East</div>
                 <p className="text-xs text-slate-400">Customized high-heat crusher lubricant upgrades for UAE & Saudi operations.</p>
               </div>
               <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
-                <div className="text-3xl font-black text-[#f58220]">Africa</div>
+                <div className="text-3xl font-black text-[#facc15]">Africa</div>
                 <p className="text-xs text-slate-400">Operational projects in copper, gold, and iron mines across 8+ African nations.</p>
               </div>
             </div>
@@ -584,41 +801,42 @@ export default function Home() {
 
               {/* Left Column: Contact details */}
               <div className="lg:col-span-5 space-y-6">
-                <div>
-                  <span className="text-[#0b5c9e] font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">
-                    Need Help?
-                  </span>
-                  <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 text-slate-800 uppercase">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
+                    <span>Need Help?</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0c122c] tracking-tight leading-[1.15]">
                     Connect With Our Engineers
                   </h2>
                 </div>
-                <p className="text-slate-600 text-sm leading-relaxed font-sans">
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-sans">
                   Have a specific quarry configuration, throughput quota, or parts request? Send us your message. Our design unit will draft an initial proposal within 24 hours.
                 </p>
 
                 <div className="space-y-4 pt-4">
                   <div className="flex gap-4 items-center">
-                    <div className="bg-blue-50 text-[#0b5c9e] p-3 rounded-full shrink-0">
+                    <div className="bg-[#fefce8] text-[#ca8a04] p-3 rounded-full shrink-0 border border-[#fef08a]">
                       <Phone size={20} />
                     </div>
                     <div>
                       <span className="block text-xs font-bold text-slate-400 uppercase">Call Support</span>
-                      <a href="tel:+919876543210" className="text-sm font-bold text-slate-800 hover:text-[#0b5c9e] transition-colors font-sans">+91 98765 43210</a>
+                      <a href="tel:+919876543210" className="text-sm font-bold text-slate-800 hover:text-[#ca8a04] transition-colors font-sans">+91 98765 43210</a>
                     </div>
                   </div>
 
                   <div className="flex gap-4 items-center">
-                    <div className="bg-orange-50 text-[#f58220] p-3 rounded-full shrink-0">
+                    <div className="bg-[#fefce8] text-[#ca8a04] p-3 rounded-full shrink-0 border border-[#fef08a]">
                       <Mail size={20} />
                     </div>
                     <div>
                       <span className="block text-xs font-bold text-slate-400 uppercase font-sans">Business Email</span>
-                      <a href="mailto:info@volgaasia.com" className="text-sm font-bold text-slate-800 hover:text-[#0b5c9e] transition-colors font-sans">info@volgaasia.com</a>
+                      <a href="mailto:info@volgaasia.com" className="text-sm font-bold text-slate-800 hover:text-[#ca8a04] transition-colors font-sans">info@volgaasia.com</a>
                     </div>
                   </div>
 
                   <div className="flex gap-4 items-center">
-                    <div className="bg-emerald-50 text-emerald-600 p-3 rounded-full shrink-0">
+                    <div className="bg-[#fefce8] text-[#ca8a04] p-3 rounded-full shrink-0 border border-[#fef08a]">
                       <MapPin size={20} />
                     </div>
                     <div>
@@ -654,7 +872,7 @@ export default function Home() {
                             value={formData.name}
                             onChange={handleFormChange}
                             placeholder="John Doe"
-                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0b5c9e] transition-colors text-slate-800 font-sans"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 font-sans"
                           />
                         </div>
                         <div>
@@ -666,7 +884,7 @@ export default function Home() {
                             value={formData.email}
                             onChange={handleFormChange}
                             placeholder="john@company.com"
-                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0b5c9e] transition-colors text-slate-800 font-sans"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 font-sans"
                           />
                         </div>
                       </div>
@@ -680,7 +898,7 @@ export default function Home() {
                           value={formData.phone}
                           onChange={handleFormChange}
                           placeholder="+1 (234) 567-890"
-                          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0b5c9e] transition-colors text-slate-800 font-sans"
+                          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 font-sans"
                         />
                       </div>
 
@@ -693,13 +911,13 @@ export default function Home() {
                           value={formData.message}
                           onChange={handleFormChange}
                           placeholder="Provide details like expected throughput, stone material type, feeding size, etc..."
-                          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0b5c9e] transition-colors text-slate-800 resize-none font-sans"
+                          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 resize-none font-sans"
                         ></textarea>
                       </div>
 
                       <button
                         type="submit"
-                        className="w-full bg-[#f58220] hover:bg-[#d96a14] text-white font-bold p-4 rounded-xl text-xs uppercase tracking-wider shadow-md shadow-orange-500/10 hover:shadow-lg transition-all text-center cursor-pointer"
+                        className="w-full bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold p-4 rounded-xl text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all text-center cursor-pointer"
                       >
                         Send Inquiry Now
                       </button>
@@ -734,34 +952,34 @@ export default function Home() {
 
           {/* Navbar Links */}
           <div className="space-y-4">
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#f58220] border-l-2 border-[#f58220] pl-3 font-sans">Useful Links</h4>
+            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#facc15] border-l-2 border-[#facc15] pl-3 font-sans">Useful Links</h4>
             <ul className="space-y-2 text-xs text-slate-400 font-sans">
-              <li><a href="#home" className="hover:text-[#f58220] transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-[#f58220] transition-colors">About Us</a></li>
-              <li><a href="#products" className="hover:text-[#f58220] transition-colors">Products & specs</a></li>
-              <li><a href="#infrastructure" className="hover:text-[#f58220] transition-colors">Infrastructures</a></li>
-              <li><a href="#contact" className="hover:text-[#f58220] transition-colors">Contact Sales</a></li>
+              <li><a href="#home" className="hover:text-[#facc15] transition-colors">Home</a></li>
+              <li><a href="#about" className="hover:text-[#facc15] transition-colors">About Us</a></li>
+              <li><a href="#products" className="hover:text-[#facc15] transition-colors">Products & specs</a></li>
+              <li><a href="#infrastructure" className="hover:text-[#facc15] transition-colors">Infrastructures</a></li>
+              <li><a href="#contact" className="hover:text-[#facc15] transition-colors">Contact Sales</a></li>
             </ul>
           </div>
 
           {/* Products links */}
           <div className="space-y-4">
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#f58220] border-l-2 border-[#f58220] pl-3 font-sans">Equipments</h4>
+            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#facc15] border-l-2 border-[#facc15] pl-3 font-sans">Equipments</h4>
             <ul className="space-y-2 text-xs text-slate-400 font-sans">
-              <li><span className="hover:text-[#f58220] cursor-pointer transition-colors">Primary Jaw Crusher</span></li>
-              <li><span className="hover:text-[#f58220] cursor-pointer transition-colors">Hydraulic Cone Crusher</span></li>
-              <li><span className="hover:text-[#f58220] cursor-pointer transition-colors">Heavy Duty Feeder</span></li>
-              <li><span className="hover:text-[#f58220] cursor-pointer transition-colors">Vibratory Screening Unit</span></li>
-              <li><span className="hover:text-[#f58220] cursor-pointer transition-colors">Sand Washing Setup</span></li>
+              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Primary Jaw Crusher</span></li>
+              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Hydraulic Cone Crusher</span></li>
+              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Heavy Duty Feeder</span></li>
+              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Vibratory Screening Unit</span></li>
+              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Sand Washing Setup</span></li>
             </ul>
           </div>
 
           {/* Newsletter / Notice */}
           <div className="space-y-4">
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#f58220] border-l-2 border-[#f58220] pl-3 font-sans">Global Hotline</h4>
+            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#facc15] border-l-2 border-[#facc15] pl-3 font-sans">Global Hotline</h4>
             <div className="space-y-2 text-xs text-slate-400 font-sans">
               <p>For custom engineering and site blueprints:</p>
-              <a href="tel:+919876543210" className="inline-block bg-[#f58220] hover:bg-[#d96a14] text-white font-bold px-4 py-2 rounded mt-2 transition-all">
+              <a href="tel:+919876543210" className="inline-block bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-4 py-2 rounded mt-2 transition-all">
                 +91 98765 43210
               </a>
               <p className="text-[10px] text-slate-500 pt-1 font-sans">Working Hours: 09:00 AM - 06:00 PM (IST)</p>
