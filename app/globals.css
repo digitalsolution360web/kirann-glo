@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a; /* Slate 900 */
+  --background: #f0f6fb;
+  --foreground: #0d1f6e; /* Kiran Global Navy */
 }
 
 @theme {
-  --color-brand-blue: #0b5c9e; /* Volga Blue */
-  --color-brand-orange: #f58220;  /* Volga Orange */
-  --color-brand-dark: #07355c;
-  --color-brand-light: #e0f2fe;
+  /* ── Kiran Global Brand Colors (from logo) ─────────────────────── */
+  --color-brand-blue: #1a35b8;      /* Royal Blue – logo triangle */
+  --color-brand-navy: #0d1f6e;      /* Deep Navy – logo banner */
+  --color-brand-yellow: #f5c800;    /* Golden Yellow – sunburst rays */
+  --color-brand-sky: #4db8e8;       /* Sky Blue – globe */
+  --color-brand-light: #e8f0fe;     /* Light Blue – backgrounds */
   --font-sans: var(--font-plus-jakarta-sans);
 }
 
@@ -20,22 +22,28 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
+/* ── Custom Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #e8f0fe;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #1a35b8;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #0d1f6e;
 }
 
-/* Animations */
+/* ── Selection color matches brand ─────────────────────────────────── */
+::selection {
+  background: #1a35b8;
+  color: #ffffff;
+}
+
+/* ── Keyframe Animations ────────────────────────────────────────────── */
 @keyframes slide-in {
   from {
     transform: translateY(20px);
@@ -47,17 +55,31 @@ body {
   }
 }
 
-.animate-slide-in {
-  animation: slide-in 0.8s ease-out forwards;
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* World Map Grid Accent Background Overlay */
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* ── World-map dot grid background ─────────────────────────────────── */
 .world-grid-bg {
-  background-image: radial-gradient(circle at 1px 1px, rgba(11, 92, 158, 0.08) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(245, 200, 0, 0.12) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
-/* 3D Flip Card classes */
+/* ── 3D Flip Card utilities ─────────────────────────────────────────── */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -71,3 +93,7 @@ body {
   transform: rotateY(180deg);
 }
 
+/* ── Hover group flip animation ─────────────────────────────────────── */
+.group:hover .group-hover\:rotate-y-180 {
+  transform: rotateY(180deg);
+}

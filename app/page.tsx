@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   Phone,
@@ -18,20 +18,21 @@ import {
   CheckCircle,
   Clock,
   Award,
-  Leaf,
   RefreshCw,
-  Wind
+  Wind,
+  ChevronDown
 } from "lucide-react";
+
+// ── Brand color tokens based on Kiran Global Logo ──────────────────────────
+// Primary: Royal Blue  #1a35b8
+// Accent:  Golden Yellow #f5c800
+// Light:   Sky Blue  #cce9f7
+// Dark:    Navy     #0d1f6e
 
 // Slide Data
 const SLIDES = [
-  {
-    image: "/banner2.jpg",
-
-  },
-  {
-    image: "/41.png",
-  }
+  { image: "/banner2.jpg" },
+  { image: "/41.png" }
 ];
 
 // Product Data
@@ -66,9 +67,7 @@ const PRODUCTS = [
   }
 ];
 
-
-
-// Industries We Support Data (Hover to change background image)
+// Industries We Support Data
 const INDUSTRIES_SUPPORTED = [
   {
     id: "sodio-lumps",
@@ -100,14 +99,49 @@ const INDUSTRIES_SUPPORTED = [
   }
 ];
 
+// FAQ Data
+const FAQ_ITEMS = [
+  {
+    question: "What types of materials can Kiran Global process?",
+    answer: "Our heavy-duty crushing machinery is engineered to process a wide variety of materials including hard rocks like basalt, granite, quartzite, diorite, and river bed gravel, as well as softer materials like limestone, coal, and construction demolition debris. We optimize the chamber configuration based on your raw material hardness."
+  },
+  {
+    question: "Do you offer customized configurations for specific quarry setups?",
+    answer: "Yes, customization is a core part of Kiran Global's engineering. We offer custom cavity configurations (coarse, medium, fine), customized mobile wheel-mounted or crawler chassis designs, tail conveyor lengths, and custom electrical control setups. Our engineers will work with you to map out your throughput requirements."
+  },
+  {
+    question: "What is the typical warranty and after-sales support package?",
+    answer: "Every Kiran Global machine comes with a standard 12-month structural warranty. We provide on-site commissioning by senior service technicians, operator safety training, and lifetime access to remote support. Extended warranty and periodic service contracts are also available."
+  },
+  {
+    question: "How are wear parts and replacement spares managed and shipped?",
+    answer: "We maintain dedicated parts inventories across all our depots. Essential wear parts like jaw plates, mantle liners, blow bars, conveyor belts, and screening meshes can be shipped via express air or sea freight, minimizing downtime and maintaining high production availability."
+  },
+  {
+    question: "Are Kiran Global systems available in mobile or stationary models?",
+    answer: "Yes, we design both stationary crushing and screening plants (configured up to 1000 t/h capacity) and highly versatile mobile modular systems. Our mobile systems are available in crawler-tracked or wheel-mounted configurations, allowing quick repositioning directly at the quarry face or demolition site."
+  }
+];
+
+// NAV LINKS
+const NAV_LINKS = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "products", label: "Products" },
+  { id: "infrastructure", label: "Infrastructure" },
+  { id: "faq", label: "FAQ" },
+];
+
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeIndustryIndex, setActiveIndustryIndex] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState("jaw");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("home");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // Auto slide effect
   useEffect(() => {
@@ -117,13 +151,15 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
-  };
+  // Scroll listener for header shadow
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const handlePrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-  };
+  const handleNextSlide = () => setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+  const handlePrevSlide = () => setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -139,294 +175,320 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#edf4fa] font-sans selection:bg-[#facc15] selection:text-slate-950">
+    <div className="relative min-h-screen flex flex-col bg-[#f0f6fb] font-sans selection:bg-[#1a35b8] selection:text-white">
 
-      {/* Primary Header - Wider Navbar alignment */}
-      <header className="sticky top-0 z-40 bg-blue-50 backdrop-blur-md shadow-xs transition-all border-b border-slate-100">
-        <div className="w-full max-w-[95%] lg:max-w-[1550px] mx-auto px-4 sm:px-8 py-4 flex justify-between items-center">
-
-          {/* Logo Section */}
-          <div className="relative flex items-center h-12 w-48 sm:w-56 cursor-pointer">
-            <Image
-              src="/logo.png"
-              alt="Volga Asia Logo"
-              fill
-              className="object-contain"
-              priority
-            />
+      {/* ── TOP UTILITY BAR ─────────────────────────────────────────────── */}
+      <div className="bg-[#1a35b8] text-blue-100 py-2 font-sans text-xs hidden md:block relative z-50">
+        <div className="w-full max-w-[1400px] mx-auto px-8 flex justify-between items-center">
+          {/* Left: Contact info */}
+          <div className="flex items-center gap-7">
+            <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 group">
+              <Phone size={11} className="text-[#f5c800]" />
+              <span>+91 98765 43210</span>
+            </a>
+            <a href="mailto:info@kiranglobal.com" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200">
+              <Mail size={11} className="text-[#f5c800]" />
+              <span>info@kiranglobal.com</span>
+            </a>
+            <span className="flex items-center gap-2 text-blue-200">
+              <MapPin size={11} className="text-[#f5c800]" />
+              Delhi-NCR, India
+            </span>
           </div>
+          {/* Right: Hours + status */}
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-2 text-blue-200">
+              <Clock size={11} className="text-[#f5c800]" />
+              Mon – Sat: 9:00 AM – 6:00 PM
+            </span>
+            <span className="flex items-center gap-1.5 bg-white/10 border border-white/20 px-3 py-1 rounded-full">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="text-emerald-300 font-semibold">Operations Active</span>
+            </span>
+          </div>
+        </div>
+      </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide text-slate-705">
+      {/* ── MAIN STICKY HEADER — Light Professional ──────────────────────── */}
+      <header
+        className={`sticky top-0 z-40 transition-all duration-300 ${scrolled
+          ? "bg-white/95 backdrop-blur-lg shadow-xl shadow-blue-900/10 border-b border-slate-200"
+          : "bg-white border-b border-slate-200"
+          }`}
+      >
+        {/* Bottom thin accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#1a35b8] via-[#f5c800] to-[#1a35b8] opacity-70" />
+
+        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8">
+          <div className="flex items-center justify-between py-2.5">
+
+            {/* Logo */}
             <a
               href="#home"
               onClick={() => setActiveNav("home")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "home" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
+              className="relative flex items-center h-14 w-52 sm:w-60 cursor-pointer shrink-0"
             >
-              Home
+              <Image
+                src="/logo.png"
+                alt="Kiran Global Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </a>
-            <a
-              href="#about"
-              onClick={() => setActiveNav("about")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "about" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
-            >
-              About
-            </a>
-            <a
-              href="#products"
-              onClick={() => setActiveNav("products")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "products" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
-            >
-              Products
-            </a>
-            <a
-              href="#infrastructure"
-              onClick={() => setActiveNav("infrastructure")}
-              className={`transition-colors py-2 relative font-bold text-slate-700 hover:text-[#ca8a04] ${activeNav === "infrastructure" ? "text-[#ca8a04] border-b-2 border-[#facc15]" : ""}`}
-            >
-              Infrastructure
-            </a>
-            <a
-              href="#contact"
-              onClick={() => setActiveNav("contact")}
-              className="bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-6 py-2.5 rounded-full shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all text-xs uppercase tracking-wider block"
-            >
-              Contact Us
-            </a>
-          </nav>
 
-          {/* Mobile Menu Icon */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-800 hover:text-[#ca8a04] transition-colors"
-            aria-label="Toggle Menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-3">
+              {NAV_LINKS.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setActiveNav(item.id)}
+                  className={`
+                    relative px-6 py-2 text-sm font-semibold rounded-lg transition-all duration-250 group overflow-hidden
+                    ${activeNav === item.id
+                      ? "text-white bg-[#1a35b8] shadow-md shadow-blue-700/30"
+                      : "text-[#0d1f6e] hover:text-white hover:bg-[#1a35b8] hover:shadow-md hover:shadow-blue-700/30"
+                    }
+                  `}
+                >
+                  {/* Slide-up fill on hover — visual polish */}
+                  {/* <span className="absolute inset-x-0 bottom-0 h-0 bg-[#f5c800] transition-all duration-200 group-hover:h-[3px]" /> */}
+                  <span className="relative">{item.label}</span>
+                </a>
+              ))}
+
+              {/* Divider */}
+              <div className="h-7 w-px bg-slate-300 mx-3" />
+
+              {/* CTA Button */}
+              <a
+                href="#contact"
+                onClick={() => setActiveNav("contact")}
+                className="
+                  relative overflow-hidden ml-1 px-6 py-2.5 rounded-full text-xs font-black
+                  uppercase tracking-widest text-white
+                  bg-gradient-to-r from-[#1a35b8] to-[#0d1f6e]
+                  shadow-md shadow-blue-800/30
+                  hover:shadow-xl hover:shadow-blue-800/40
+                  hover:scale-105 active:scale-95
+                  transition-all duration-200
+                  group
+                "
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-in-out" />
+                <span className="relative flex items-center gap-2">
+                  <Phone size={13} />
+                  Get Quote
+                </span>
+              </a>
+            </nav>
+
+            {/* Mobile Hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2.5 rounded-xl text-[#0d1f6e] hover:bg-[#1a35b8] hover:text-white transition-all border border-slate-200 hover:border-[#1a35b8] shadow-sm"
+              aria-label="Toggle Menu"
+            >
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl py-6 px-6 flex flex-col gap-4 animate-fade-in z-50">
-            <a
-              href="#home"
-              onClick={() => { setActiveNav("home"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "home" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
-            >
-              Home
-            </a>
-            <a
-              href="#about"
-              onClick={() => { setActiveNav("about"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "about" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
-            >
-              About
-            </a>
-            <a
-              href="#products"
-              onClick={() => { setActiveNav("products"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "products" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
-            >
-              Products
-            </a>
-            <a
-              href="#infrastructure"
-              onClick={() => { setActiveNav("infrastructure"); setMobileMenuOpen(false); }}
-              className={`py-2 px-3 rounded-lg font-semibold text-slate-800 hover:bg-yellow-50 ${activeNav === "infrastructure" ? "text-[#ca8a04] bg-[#fefce8]" : ""}`}
-            >
-              Infrastructure
-            </a>
+        {/* ── MOBILE DRAWER — Light Theme ──────────────────────────────────── */}
+        <div
+          className={`
+            lg:hidden overflow-hidden transition-all duration-300 ease-in-out
+            ${mobileMenuOpen ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"}
+          `}
+        >
+          <div className="bg-white border-t border-slate-100 px-5 pb-6 pt-3 flex flex-col gap-1.5 shadow-2xl shadow-blue-900/10">
+            {NAV_LINKS.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={() => { setActiveNav(item.id); setMobileMenuOpen(false); }}
+                className={`
+                  flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200
+                  ${activeNav === item.id
+                    ? "bg-[#1a35b8] text-white shadow-md shadow-blue-700/30"
+                    : "text-[#0d1f6e] bg-slate-50 hover:bg-[#1a35b8] hover:text-white hover:shadow-md hover:shadow-blue-700/20"
+                  }
+                `}
+              >
+                <span className={`h-2 w-2 rounded-full shrink-0 transition-all ${activeNav === item.id ? "bg-[#f5c800]" : "bg-slate-300"}`} />
+                {item.label}
+                {activeNav === item.id && (
+                  <span className="ml-auto text-[10px] font-black uppercase tracking-wider text-blue-200">Active</span>
+                )}
+              </a>
+            ))}
+
             <a
               href="#contact"
               onClick={() => { setActiveNav("contact"); setMobileMenuOpen(false); }}
-              className="mt-2 bg-[#facc15] hover:bg-[#eab308] text-center text-slate-950 font-extrabold p-3 rounded-lg transition-colors uppercase tracking-wider text-sm shadow-md"
+              className="mt-2 flex items-center justify-center gap-2 bg-gradient-to-r from-[#1a35b8] to-[#0d1f6e] text-white font-black py-4 px-6 rounded-xl text-sm uppercase tracking-wider shadow-lg transition-all hover:shadow-xl"
             >
-              Contact Us
+              <Phone size={15} />
+              Get a Free Quote
             </a>
           </div>
-        )}
+        </div>
       </header>
 
       <main className="flex-1">
 
-        {/* Hero Section Banner - Shorter cover heights (65vh) as requested, full width */}
+        {/* ── HERO SLIDER ─────────────────────────────────────────────────── */}
         <section id="home" className="relative h-[65vh] min-h-[420px] w-full overflow-hidden bg-slate-900 text-white flex items-center">
-          {/* Slides */}
           {SLIDES.map((slide, index) => (
             <div
               key={index}
               className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"}`}
             >
-              {/* background dark overlay */}
-              <div className="absolute inset-0 bg-black/20 z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f6e]/70 via-black/30 to-transparent z-10" />
               <Image
                 src={slide.image}
-                alt="Volga Asia Slider"
+                alt="Kiran Global Banner"
                 fill
                 priority={index === 0}
                 className="object-cover object-center w-full h-full"
               />
-
-
-
             </div>
-
           ))}
 
-          {/* Slider Left Arrow - Shaded Circle matching styling */}
+          {/* Slide arrows */}
           <button
             onClick={handlePrevSlide}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-900/60 hover:bg-[#facc15] hover:text-slate-950 text-white backdrop-blur-md border border-white/10 hover:border-[#facc15] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/10 hover:bg-[#f5c800] hover:text-slate-900 text-white backdrop-blur-md border border-white/20 hover:border-[#f5c800] hover:scale-110 active:scale-95 transition-all cursor-pointer"
             aria-label="Previous Slide"
           >
             <ChevronLeft size={22} />
           </button>
-
-          {/* Slider Right Arrow - Shaded Circle matching styling */}
           <button
             onClick={handleNextSlide}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-slate-900/60 hover:bg-[#facc15] hover:text-slate-950 text-white backdrop-blur-md border border-white/10 hover:border-[#facc15] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/10 hover:bg-[#f5c800] hover:text-slate-900 text-white backdrop-blur-md border border-white/20 hover:border-[#f5c800] hover:scale-110 active:scale-95 transition-all cursor-pointer"
             aria-label="Next Slide"
           >
             <ChevronRight size={22} />
           </button>
 
-          {/* White Bottom Indicator Bar */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {/* Slide indicators */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
             {SLIDES.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentSlide(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40"}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? "w-8 bg-[#f5c800]" : "w-2 bg-white/40 hover:bg-white/70"}`}
                 aria-label={`Slide ${i + 1}`}
-              ></button>
+              />
             ))}
           </div>
         </section>
 
-        {/* About Section - Deep Blue theme background with 3D Flip Card */}
-        <section id="about" className="relative py-20 bg-blue-50 overflow-hidden world-grid-bg">
-          {/* Decorative concentric targets inside background */}
-          <div className="absolute right-0 bottom-[-150px] w-[500px] h-[500px] pointer-events-none opacity-10">
-            <div className="absolute inset-0 rounded-full border-2 border-white/20 animate-pulse"></div>
-            <div className="absolute inset-12 rounded-full border border-white/15"></div>
-            <div className="absolute inset-28 rounded-full border border-white/10"></div>
-          </div>
+        {/* ── ABOUT SECTION ───────────────────────────────────────────────── */}
+        <section id="about" className="relative py-20 bg-white overflow-hidden">
+          {/* Decorative background */}
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-[#f0f6fb] to-transparent pointer-events-none" />
+          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border-2 border-[#1a35b8]/5 pointer-events-none" />
+          <div className="absolute -right-48 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#1a35b8]/5 pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-              {/* Left Column: Narrative & Stats (White blocks) */}
-              <div className="lg:col-span-6 space-y-6 text-white">
+              {/* Left Text Column */}
+              <div className="lg:col-span-6 space-y-6">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
-                    <span>About Us</span>
+                  <div className="flex items-center gap-3">
+                    <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">About Us</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#0c122c] tracking-tight leading-[1.15] lg:leading-[1.2]">
-                    About Volga Asia Company
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0d1f6e] tracking-tight leading-tight">
+                    About <span className="text-[#1a35b8]">Kiran Global</span>
                   </h2>
                 </div>
 
-                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
-                  We are a leading manufacturer and supplier of high-performance stone crusher machines, delivering advanced crushing solutions for the construction and mining industries. With years of industry experience, we specialize in designing and manufacturing both mobile crushers and fixed crushing plants that meet the highest standards of quality, durability, and efficiency.
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">
+                  We are a leading manufacturer and supplier of high-performance stone crusher machines, delivering advanced crushing solutions for the construction and mining industries. With years of industry experience, we specialize in designing and manufacturing both mobile crushers and fixed crushing plants.
                 </p>
-
-                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">
                   Our company is committed to providing reliable equipment that helps clients maximize productivity while minimizing operational costs. From small-scale projects to large industrial operations, we offer customized crushing solutions tailored to specific requirements.
                 </p>
 
-                {/* Stats Section with White blocks matching user screenshot */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
-                  <div className="bg-white p-6 rounded-2xl shadow-xl hover:scale-102 transition-transform border border-white/10">
-                    <div className="text-3xl font-black text-[#ca8a04]">20+</div>
-                    <div className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Years Experience</div>
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <div className="bg-[#0d1f6e] p-5 rounded-2xl shadow-lg border border-blue-900/50 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#1a35b8] to-[#0d1f6e]" />
+                    <div className="relative">
+                      <div className="text-3xl font-black text-[#f5c800]">20+</div>
+                      <div className="text-xs font-bold text-blue-200 mt-1 uppercase tracking-wider">Years Experience</div>
+                    </div>
                   </div>
-
-                  <div className="bg-white p-6 rounded-2xl shadow-xl hover:scale-102 transition-transform border border-white/10">
-                    <div className="text-3xl font-black text-[#ca8a04]">24+</div>
-                    <div className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Industries Served</div>
+                  <div className="bg-[#f5c800] p-5 rounded-2xl shadow-lg relative overflow-hidden group">
+                    <div className="relative">
+                      <div className="text-3xl font-black text-[#0d1f6e]">24+</div>
+                      <div className="text-xs font-bold text-[#0d1f6e]/70 mt-1 uppercase tracking-wider">Industries Served</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: 3D Flip Card Frame */}
+              {/* Right: 3D Flip Card */}
               <div className="lg:col-span-6 flex justify-center items-center">
                 <div className="perspective-1000 w-full max-w-[460px] h-[360px] sm:h-[430px] group cursor-pointer relative">
                   <div className="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180">
-                    {/* Front Face: why-choose.jpeg */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border border-white/20">
+                    <div className="absolute inset-0 backface-hidden rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#1a35b8]/10">
                       <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                        <Image
-                          src="/why-choose.jpeg"
-                          alt="Volga Asia Stationary Crusher"
-                          fill
-                          className="object-contain bg-white"
-                          priority
-                        />
+                        <Image src="/why-choose.jpeg" alt="Kiran Global Stationary Crusher" fill className="object-contain bg-white" priority />
                       </div>
                     </div>
-
-                    {/* Back Face: 41.png mobile crusher */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border border-white/20">
+                    <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#f5c800]/30">
                       <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                        <Image
-                          src="/41.png"
-                          alt="Volga Asia Mobile Crusher"
-                          fill
-                          className="object-contain bg-white"
-                        />
+                        <Image src="/41.png" alt="Kiran Global Mobile Crusher" fill className="object-contain bg-white" />
                       </div>
                     </div>
                   </div>
+                  {/* Flip hint */}
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#1a35b8]/50 uppercase tracking-widest whitespace-nowrap">
+                    Hover to flip
+                  </div>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
 
-        {/* Industries We Support Section (Transparent Window Card Layout matching Reference Screenshot & Logo Canary Yellow Accent) */}
+        {/* ── INDUSTRIES SECTION ──────────────────────────────────────────── */}
         <section className="relative min-h-[550px] sm:min-h-[640px] w-full py-16 sm:py-24 overflow-hidden flex items-center justify-center bg-slate-900 transition-all duration-700">
-          
-          {/* Full-width Background Images with smooth crossfade opacity */}
           {INDUSTRIES_SUPPORTED.map((item, index) => (
             <div
               key={item.id}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
-                index === activeIndustryIndex ? "opacity-100 scale-100 z-0" : "opacity-0 scale-105 pointer-events-none"
-              }`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${index === activeIndustryIndex ? "opacity-100 z-0" : "opacity-0 pointer-events-none"
+                }`}
             >
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
                 priority={index === 0}
-                className="object-cover object-center w-full h-full filter brightness-100 transition-transform duration-1000 ease-out"
+                className="object-cover object-center w-full h-full"
               />
             </div>
           ))}
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f6e]/80 via-[#0d1f6e]/40 to-transparent z-[1]" />
 
-          {/* Floating Card with Thick White Outer Frame & Transparent Window Cutout */}
           <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6">
-            <div className="rounded-[32px] border-[6px] border-white shadow-2xl overflow-hidden bg-transparent flex flex-col md:flex-row min-h-[380px] sm:min-h-[440px]">
-              
-              {/* Left Side: Completely Transparent Window Frame (Section background shows directly through!) */}
-              <div className="flex-1 bg-transparent min-h-[200px] md:min-h-full">
-                {/* Intentionally empty/transparent to reveal the background image beneath */}
-              </div>
+            <div className="rounded-[28px] border-[5px] border-white/20 shadow-2xl overflow-hidden bg-transparent flex flex-col md:flex-row min-h-[380px] sm:min-h-[440px] backdrop-blur-sm">
+              {/* Left transparent window */}
+              <div className="flex-1 bg-transparent min-h-[200px] md:min-h-full" />
 
-              {/* Right Side: Off-white/Cream List Panel matching logo branding */}
-              <div className="w-full md:w-[380px] lg:w-[420px] bg-[#faf8f5] p-6 sm:p-8 flex flex-col justify-center border-t-[6px] md:border-t-0 md:border-l-[6px] border-white">
-                
-                {/* Category Header with Logo Sunburst Yellow Accent Pulse */}
-                <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase mb-5 sm:mb-6">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block animate-pulse shadow-xs shrink-0"></span>
-                  <span>Industries We Support</span>
+              {/* Right panel */}
+              <div className="w-full md:w-[400px] lg:w-[440px] bg-white/95 backdrop-blur-xl p-6 sm:p-8 flex flex-col justify-center border-t-[5px] md:border-t-0 md:border-l-[5px] border-white/20">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="h-[3px] w-6 bg-[#f5c800] rounded-full" />
+                  <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Industries We Support</span>
                 </div>
-
-                {/* Interactive Item List */}
-                <div className="space-y-3.5">
+                <div className="space-y-2">
                   {INDUSTRIES_SUPPORTED.map((item, index) => {
                     const IconComp = item.icon;
                     const isActive = index === activeIndustryIndex;
@@ -435,30 +497,19 @@ export default function Home() {
                         key={item.id}
                         onMouseEnter={() => setActiveIndustryIndex(index)}
                         onClick={() => setActiveIndustryIndex(index)}
-                        className={`flex items-center gap-4 p-4 rounded-[28px] cursor-pointer transition-all duration-300 ${
-                          isActive
-                            ? "bg-[#efe9df]"
-                            : "bg-transparent hover:bg-[#efe9df]/50"
-                        }`}
-                      >
-                        {/* Icon Circle (Beige in normal state, White in hovered state) */}
-                        <div
-                          className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-                            isActive
-                              ? "bg-white shadow-xs text-[#0b5c9e]"
-                              : "bg-[#efe9df]/85 text-[#0b5c9e]/80"
+                        className={`flex items-center gap-4 p-4 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? "bg-[#1a35b8] text-white shadow-md" : "bg-transparent hover:bg-blue-50 text-slate-700"
                           }`}
-                        >
+                      >
+                        <div className={`shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-[#f5c800] text-[#0d1f6e]" : "bg-[#e8f0fe] text-[#1a35b8]"
+                          }`}>
                           <IconComp size={20} />
                         </div>
-
-                        {/* Text Container */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-[15px] sm:text-base font-bold text-[#0c122c] tracking-tight leading-none">
+                          <h3 className={`text-sm font-bold tracking-tight leading-tight ${isActive ? "text-white" : "text-[#0d1f6e]"}`}>
                             {item.title}
                           </h3>
                           {isActive && (
-                            <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-tight font-normal">
+                            <p className="text-[11px] text-blue-100 mt-1 leading-tight">
                               {item.description}
                             </p>
                           )}
@@ -467,115 +518,74 @@ export default function Home() {
                     );
                   })}
                 </div>
-
               </div>
-
             </div>
           </div>
-
         </section>
 
-        {/* Sustainability & Commitment Section (Matching Logo Sunburst Yellow Theme & Exact Screenshot Layout) */}
-        <section className="py-12 sm:py-16 bg-[#edf4fa] relative overflow-hidden border-y border-slate-200/60">
-          <div className="w-full max-w-[95%] lg:max-w-[1550px] mx-auto px-4 sm:px-8 relative z-10">
-            
-            {/* Top Main Grid Row: Image on Left, Content on Right */}
+        {/* ── SUSTAINABILITY SECTION ──────────────────────────────────────── */}
+        <section className="py-16 sm:py-20 bg-[#f0f6fb] relative overflow-hidden border-y border-blue-100/60">
+          <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              
-              {/* Left Column: Landscape Image */}
-              <div className="lg:col-span-6 relative w-full h-[260px] sm:h-[320px] lg:h-[340px] rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 bg-slate-200">
-                <Image
-                  src="/SUSTAINABILITY.webp"
-                  alt="Costruire un Futuro Sostenibile"
-                  fill
-                  priority
-                  className="object-cover object-center w-full h-full"
-                />
+              <div className="lg:col-span-6 relative w-full h-[260px] sm:h-[320px] lg:h-[360px] rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-slate-200">
+                <Image src="/SUSTAINABILITY.webp" alt="Kiran Global Commitment" fill priority className="object-cover object-center" />
               </div>
-
-              {/* Right Column: Content styled with Logo Sunburst Yellow Accent (#facc15 / #d97706) */}
               <div className="lg:col-span-6 space-y-5">
-                
-                {/* Full-width Top Sunburst Yellow Accent Bar matching Reference Screenshot */}
-                <div className="h-2 w-full bg-[#facc15] rounded-full shadow-xs"></div>
-
-                {/* Badge matching logo sunburst yellow palette */}
-                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
-                  <span>Sostenibilità e Responsabilità</span>
+                {/* Accent bar */}
+                <div className="flex items-center gap-3">
+                  <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                  <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Commitment & Responsibility</span>
                 </div>
-
-                {/* Heading with Logo Sunburst Yellow Text Highlight */}
-                <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#0c122c] tracking-tight leading-[1.15] lg:leading-[1.2]">
-                  Costruire un Futuro Sostenibile — <span className="text-[#b45309] bg-[#fefce8] px-2 py-0.5 rounded-lg border border-[#fef08a] shadow-xs inline-block">Il Nostro Impegno</span>
+                <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#0d1f6e] tracking-tight leading-tight">
+                  Building a <span className="text-[#1a35b8]">Sustainable</span> Future
                 </h2>
-
-                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
-                  Siamo impegnati in pratiche di produzione ambientalmente responsabili che riducono l'impatto ambientale massimizzando l'efficienza. La nostra attenzione all'innovazione sostenibile aiuta le industrie a ottenere prestazioni migliori con costi ambientali inferiori.
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">
+                  We are committed to environmentally responsible manufacturing practices that reduce environmental impact while maximizing efficiency. Our focus on sustainable innovation helps industries achieve better performance with lower environmental costs.
                 </p>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 bg-[#1a35b8] hover:bg-[#0d1f6e] text-white font-bold px-7 py-3.5 rounded-full transition-all text-xs uppercase tracking-wider shadow-lg hover:shadow-xl hover:shadow-blue-900/25 hover:scale-105 active:scale-95 cursor-pointer"
+                >
+                  <span>Learn More</span>
+                  <ArrowRight size={15} />
+                </a>
 
-                {/* Primary Logo Sunburst Yellow Action Button */}
-                <div className="pt-1">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center gap-2 bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-7 py-3 rounded-full transition-all text-xs uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
-                  >
-                    <span>Visit section</span>
-                    <ArrowRight size={15} />
-                  </a>
+                {/* Feature cards */}
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-3 hover:border-[#1a35b8]/30 hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#e8f0fe] text-[#1a35b8] border border-blue-100 flex items-center justify-center shrink-0">
+                      <RefreshCw size={18} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm">Resource Efficiency</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Optimised operations</p>
+                    </div>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-3 hover:border-[#1a35b8]/30 hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#e8f0fe] text-[#1a35b8] border border-blue-100 flex items-center justify-center shrink-0">
+                      <Wind size={18} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm">Reduced Emissions</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Cleaner production</p>
+                    </div>
+                  </div>
                 </div>
-
               </div>
-
             </div>
-
-            {/* Bottom Row: 2 Feature Cards with Sunburst Yellow Icons & Accent Styling */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-slate-200/60">
-              
-              {/* Card 1 */}
-              <div className="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/70 flex items-start gap-4 hover:border-[#facc15]/80 hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-xl bg-[#fefce8] text-[#ca8a04] border border-[#fef08a] flex items-center justify-center shrink-0">
-                  <RefreshCw size={22} />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-900 text-base">
-                    Efficienza delle Risorse
-                  </h4>
-                  <p className="text-xs text-slate-600 font-medium mt-0.5">
-                    Operazioni ottimizzate
-                  </p>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/70 flex items-start gap-4 hover:border-[#facc15]/80 hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-xl bg-[#fefce8] text-[#ca8a04] border border-[#fef08a] flex items-center justify-center shrink-0">
-                  <Wind size={22} />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-900 text-base">
-                    Emissioni Ridotte
-                  </h4>
-                  <p className="text-xs text-slate-600 font-medium mt-0.5">
-                    Produzione pulita
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
           </div>
         </section>
 
-        {/* Interactive Products Section */}
-        <section id="products" className="py-20 bg-[#edf4fa] relative">
+        {/* ── PRODUCTS SECTION ────────────────────────────────────────────── */}
+        <section id="products" className="py-20 bg-white relative">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
-                <span>Product Catalog</span>
+            <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+              <div className="flex items-center justify-center gap-3">
+                <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Product Catalog</span>
+                <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0c122c] tracking-tight leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0d1f6e] tracking-tight leading-tight">
                 Heavy Crushing & Screening Systems
               </h2>
               <p className="text-slate-500 text-sm sm:text-base leading-[1.7]">
@@ -583,46 +593,47 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Product Switch Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10">
+            {/* Product Tabs */}
+            <div className="flex flex-wrap justify-center gap-3 mb-10">
               {PRODUCTS.map((prod) => (
                 <button
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod.id)}
-                  className={`px-6 py-3 rounded-full font-extrabold text-xs uppercase tracking-wider transition-all cursor-pointer ${selectedProduct === prod.id ? "bg-[#facc15] text-slate-955 shadow-md scale-105" : "bg-white text-slate-750 hover:bg-yellow-50"}`}
+                  className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${selectedProduct === prod.id
+                    ? "bg-[#1a35b8] text-white border-[#1a35b8] shadow-md shadow-blue-900/20 scale-105"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-[#1a35b8] hover:text-[#1a35b8]"
+                    }`}
                 >
                   {prod.name}
                 </button>
               ))}
             </div>
 
-            {/* Current Product Detailed View */}
+            {/* Product Detail */}
             {PRODUCTS.map((prod) => {
               if (prod.id !== selectedProduct) return null;
               const IconComp = prod.icon;
               return (
                 <div
                   key={prod.id}
-                  className="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center animate-slide-in"
+                  className="bg-[#f0f6fb] rounded-3xl p-6 sm:p-10 shadow-sm border border-blue-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center animate-slide-in"
                 >
                   <div className="lg:col-span-7 space-y-6">
                     <div className="flex items-center gap-4">
-                      <div className="bg-[#fefce8] text-[#ca8a04] border border-[#fef08a] p-4 rounded-2xl">
+                      <div className="bg-[#1a35b8] text-[#f5c800] p-4 rounded-2xl shadow-lg">
                         <IconComp size={28} />
                       </div>
                       <div>
-                        <h3 className="text-2xl font-extrabold text-slate-800">{prod.name}</h3>
-                        <p className="text-xs font-bold text-[#b45309] uppercase tracking-wider mt-0.5">Heavy Industry Grade</p>
+                        <h3 className="text-2xl font-black text-[#0d1f6e]">{prod.name}</h3>
+                        <p className="text-xs font-bold text-[#1a35b8] uppercase tracking-wider mt-0.5">Heavy Industry Grade</p>
                       </div>
                     </div>
-                    <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
-                      {prod.description}
-                    </p>
+                    <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">{prod.description}</p>
                     <div className="space-y-3">
-                      <h4 className="font-bold text-slate-800 text-sm">Key Specifications:</h4>
+                      <h4 className="font-bold text-[#0d1f6e] text-sm">Key Specifications:</h4>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        {prod.specs.map((spec, index) => (
-                          <div key={index} className="bg-slate-50 border border-slate-100 p-3 rounded-xl text-center">
+                        {prod.specs.map((spec, idx) => (
+                          <div key={idx} className="bg-white border border-blue-100 p-3 rounded-xl text-center shadow-sm">
                             <span className="text-xs font-bold text-slate-700">{spec}</span>
                           </div>
                         ))}
@@ -631,28 +642,24 @@ export default function Home() {
                     <div className="pt-4 flex flex-wrap gap-4">
                       <a
                         href="#contact"
-                        className="bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-md transition-all"
+                        className="bg-[#1a35b8] hover:bg-[#0d1f6e] text-white font-bold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2"
                       >
-                        Request Quote & Info
+                        Request Quote
+                        <ArrowRight size={13} />
                       </a>
                       <a
                         href="#infrastructure"
-                        className="bg-transparent hover:bg-slate-50 text-slate-700 font-bold px-6 py-3 rounded-full text-xs uppercase tracking-wider border border-slate-200 transition-all cursor-pointer"
+                        className="bg-white hover:bg-slate-50 text-slate-700 font-bold px-6 py-3 rounded-full text-xs uppercase tracking-wider border border-slate-200 transition-all"
                       >
                         Infrastructure Details
                       </a>
                     </div>
                   </div>
-                  <div className="lg:col-span-5 relative h-[250px] sm:h-[320px] rounded-2xl overflow-hidden bg-slate-900 border border-slate-100">
-                    <Image
-                      src="/41.png"
-                      alt={prod.name}
-                      fill
-                      className="object-cover object-center"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <span className="text-[10px] uppercase font-extrabold tracking-widest bg-[#facc15] text-slate-950 px-2.5 py-1 rounded">
+                  <div className="lg:col-span-5 relative h-[250px] sm:h-[320px] rounded-2xl overflow-hidden bg-slate-900 border-4 border-white shadow-xl">
+                    <Image src="/41.png" alt={prod.name} fill className="object-cover object-center" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f6e]/80 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4">
+                      <span className="text-[10px] uppercase font-black tracking-widest bg-[#f5c800] text-[#0d1f6e] px-3 py-1.5 rounded-full shadow-md">
                         Manufacturing Setup
                       </span>
                     </div>
@@ -663,263 +670,271 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Infrastructure & Quality Standard Section */}
-        <section id="infrastructure" className="py-20 bg-white relative">
+        {/* ── INFRASTRUCTURE SECTION ──────────────────────────────────────── */}
+        <section id="infrastructure" className="py-20 bg-[#f0f6fb] relative">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Text side */}
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
-                    <span>Infrastructure & Capabilities</span>
+                  <div className="flex items-center gap-3">
+                    <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Infrastructure & Capabilities</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0c122c] tracking-tight leading-[1.15]">
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0d1f6e] tracking-tight leading-tight">
                     Precision Engineering & Quality Workmanship
                   </h2>
                 </div>
-                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-normal">
-                  Volga Asia operates a heavy machining workshop equipped with CNC boring mills, high capacity automatic welding arches, structural steel bending benches, and precise ultrasonic test kits to verify welding integrity inside heavy templates.
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">
+                  Kiran Global operates a heavy machining workshop equipped with CNC boring mills, high capacity automatic welding arches, structural steel bending benches, and precise ultrasonic test kits to verify welding integrity inside heavy templates.
                 </p>
 
-                {/* Grid items */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                  <div className="flex gap-3">
-                    <div className="bg-[#fefce8] text-[#ca8a04] p-2.5 h-10 w-10 flex items-center justify-center rounded-lg shrink-0 border border-[#fef08a]">
-                      <Award size={20} className="text-[#ca8a04]" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+                  <div className="flex gap-3 items-start">
+                    <div className="bg-[#1a35b8] text-[#f5c800] p-2.5 h-10 w-10 flex items-center justify-center rounded-xl shrink-0 shadow-md">
+                      <Award size={18} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-800 text-sm">Top-Tier Certification</h4>
+                      <h4 className="font-bold text-[#0d1f6e] text-sm">Top-Tier Certification</h4>
                       <p className="text-xs text-slate-500 mt-1">Products undergo rigid stress analysis before delivery.</p>
                     </div>
                   </div>
-                  <div className="flex gap-3">
-                    <div className="bg-[#fefce8] text-[#ca8a04] p-2.5 h-10 w-10 flex items-center justify-center rounded-lg shrink-0 border border-[#fef08a]">
-                      <Clock size={20} className="text-[#ca8a04]" />
+                  <div className="flex gap-3 items-start">
+                    <div className="bg-[#1a35b8] text-[#f5c800] p-2.5 h-10 w-10 flex items-center justify-center rounded-xl shrink-0 shadow-md">
+                      <Clock size={18} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-800 text-sm">High Load Capacity</h4>
+                      <h4 className="font-bold text-[#0d1f6e] text-sm">High Load Capacity</h4>
                       <p className="text-xs text-slate-500 mt-1">Engineered to support heavy throughput over longer intervals.</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-start gap-4 mt-6">
-                  <p className="text-xs text-slate-650 leading-relaxed font-sans">
-                    <strong>Notice:</strong> We offer custom configuration modules mapping specific hard ores like quartzite, basalt, granite, or river bed gravel. Ask our specialists to optimize the cavity configurations of jaws for maximum utility.
+                <div className="bg-white border-l-4 border-[#1a35b8] p-5 rounded-xl shadow-sm">
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    <strong className="text-[#0d1f6e]">Notice:</strong> We offer custom configuration modules mapping specific hard ores like quartzite, basalt, granite, or river bed gravel. Ask our specialists to optimize the cavity configurations for maximum utility.
                   </p>
                 </div>
               </div>
 
-              {/* Visual Grid side */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="h-[250px] sm:h-[300px] relative rounded-2xl overflow-hidden shadow-md bg-slate-100">
-                  <Image
-                    src="/home-ab2.webp"
-                    alt="Workshop Facility"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/10"></div>
+                <div className="h-[250px] sm:h-[300px] relative rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-slate-100">
+                  <Image src="/home-ab2.webp" alt="Workshop Facility" fill className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f6e]/40 to-transparent" />
                 </div>
-                <div className="h-[250px] sm:h-[300px] relative rounded-2xl overflow-hidden shadow-md translate-y-6 bg-slate-100">
-                  <Image
-                    src="/41.png"
-                    alt="Precision Assembly"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/10"></div>
+                <div className="h-[250px] sm:h-[300px] relative rounded-2xl overflow-hidden shadow-xl translate-y-6 border-4 border-white bg-slate-100">
+                  <Image src="/41.png" alt="Precision Assembly" fill className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f6e]/40 to-transparent" />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Global Network / World Map Circular Target Accent Section */}
-        <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
-          {/* Faint dotted world grid background */}
-          <div className="absolute inset-0 opacity-10 world-grid-bg"></div>
-
-          {/* Golden/Orange concentric target pulse represent global presence goal circle */}
+        {/* ── GLOBAL NETWORK SECTION ──────────────────────────────────────── */}
+        <section className="py-20 bg-[#0d1f6e] text-white relative overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-5 world-grid-bg" />
+          {/* Concentric circles */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none z-0 opacity-20">
-            <div className="absolute inset-0 rounded-full border border-white/5"></div>
-            <div className="absolute inset-16 rounded-full border border-white/10"></div>
-            <div className="absolute inset-32 rounded-full border border-[#facc15]/30 animate-pulse"></div>
-            <div className="absolute inset-48 rounded-full border border-[#0b5c9e]/20"></div>
-            <div className="absolute inset-64 rounded-full border border-white/10"></div>
-            <div className="absolute inset-80 rounded-full border-2 border-[#facc15]/20"></div>
+            <div className="absolute inset-0 rounded-full border border-white/10" />
+            <div className="absolute inset-16 rounded-full border border-[#f5c800]/30" />
+            <div className="absolute inset-32 rounded-full border border-white/10 animate-pulse" />
+            <div className="absolute inset-48 rounded-full border border-[#4db8e8]/20" />
+            <div className="absolute inset-64 rounded-full border border-white/5" />
           </div>
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-slate-400 uppercase">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
-                <span>Global Network</span>
+              <div className="flex items-center justify-center gap-3">
+                <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                <span className="text-xs font-bold tracking-[0.2em] text-[#f5c800] uppercase">Global Network</span>
+                <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-white tracking-tight leading-tight">
                 World Footprint & Target Quality
               </h2>
-              <p className="text-slate-400 text-sm sm:text-base leading-[1.7]">
+              <p className="text-blue-200 text-sm sm:text-base leading-[1.7]">
                 Concentric logistics network supplying crusher aggregates, wear spares, and active remote maintenance worldwide.
               </p>
             </div>
 
-            {/* Visualizing target points */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center bg-slate-955 bg-slate-950/40 backdrop-blur-xs p-8 rounded-3xl border border-white/5">
-              <div className="space-y-2">
-                <div className="text-3xl font-black text-[#facc15]">Europe</div>
-                <p className="text-xs text-slate-400">Strategic spares storage in Germany & Romania to supply Eastern Europe.</p>
-              </div>
-              <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
-                <div className="text-3xl font-black text-[#facc15]">Asia-Pacific</div>
-                <p className="text-xs text-slate-400 font-sans">Headquarters and prime heavy assembly centers based in Northern India.</p>
-              </div>
-              <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
-                <div className="text-3xl font-black text-[#facc15]">Middle East</div>
-                <p className="text-xs text-slate-400">Customized high-heat crusher lubricant upgrades for UAE & Saudi operations.</p>
-              </div>
-              <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
-                <div className="text-3xl font-black text-[#facc15]">Africa</div>
-                <p className="text-xs text-slate-400">Operational projects in copper, gold, and iron mines across 8+ African nations.</p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10">
+              {[
+                { region: "Europe", desc: "Strategic spares storage in Germany & Romania to supply Eastern Europe." },
+                { region: "Asia-Pacific", desc: "Headquarters and prime heavy assembly centers based in Northern India." },
+                { region: "Middle East", desc: "Customised high-heat crusher lubricant upgrades for UAE & Saudi operations." },
+                { region: "Africa", desc: "Operational projects in copper, gold, and iron mines across 8+ African nations." },
+              ].map((item, i) => (
+                <div key={item.region} className={`space-y-2 ${i > 0 ? "border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6" : ""}`}>
+                  <div className="text-2xl font-black text-[#f5c800]">{item.region}</div>
+                  <p className="text-xs text-blue-200 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
             </div>
 
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-1.5 text-xs text-slate-300 font-semibold bg-white/5 px-4 py-2 rounded-full border border-white/10">
-                <span className="h-2 w-2 bg-emerald-500 rounded-full animate-ping"></span>
-                Active Deployments Tracked via Volga-Link Telemetry.
+            <div className="mt-10 text-center">
+              <div className="inline-flex items-center gap-1.5 text-xs text-blue-300 font-semibold bg-white/5 px-5 py-2.5 rounded-full border border-white/10">
+                <span className="h-2 w-2 bg-emerald-400 rounded-full animate-ping" />
+                Active Deployments Tracked Globally.
               </div>
             </div>
           </div>
         </section>
 
-        {/* Contact Inquiry Section */}
-        <section id="contact" className="py-20 bg-white relative">
+        {/* ── FAQ SECTION ─────────────────────────────────────────────────── */}
+        <section id="faq" className="py-20 bg-white relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1a35b8] via-[#f5c800] to-[#1a35b8]" />
+          <div className="max-w-4xl mx-auto px-6 sm:px-8 relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+              <div className="flex items-center justify-center gap-3">
+                <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Support Center</span>
+                <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#0d1f6e] tracking-tight leading-tight">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-slate-500 text-sm sm:text-base leading-[1.7]">
+                Quick answers to common queries about our machinery, shipping, and servicing.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {FAQ_ITEMS.map((item, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? "border-[#1a35b8]/40 shadow-md shadow-blue-900/10" : "border-slate-200 hover:border-[#1a35b8]/30 hover:shadow-sm"
+                      }`}
+                  >
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 cursor-pointer select-none bg-white"
+                    >
+                      <span className={`font-bold text-sm sm:text-base transition-colors ${isOpen ? "text-[#1a35b8]" : "text-slate-800"}`}>
+                        {item.question}
+                      </span>
+                      <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-[#1a35b8] text-white rotate-180" : "bg-slate-100 text-slate-500"}`}>
+                        <ChevronDown size={16} />
+                      </div>
+                    </button>
+                    <div
+                      className={`transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-96" : "max-h-0"}`}
+                    >
+                      <div className="px-6 py-5 bg-[#f0f6fb] border-t border-[#1a35b8]/10 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {item.answer}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT SECTION ─────────────────────────────────────────────── */}
+        <section id="contact" className="py-20 bg-[#f0f6fb] relative">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-              {/* Left Column: Contact details */}
+              {/* Left: Contact info */}
               <div className="lg:col-span-5 space-y-6">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#475569] uppercase">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block shadow-xs shrink-0"></span>
-                    <span>Need Help?</span>
+                  <div className="flex items-center gap-3">
+                    <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Need Help?</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0c122c] tracking-tight leading-[1.15]">
+                  <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#0d1f6e] tracking-tight leading-tight">
                     Connect With Our Engineers
                   </h2>
                 </div>
-                <p className="text-slate-600 text-sm sm:text-base leading-[1.7] font-sans">
+                <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">
                   Have a specific quarry configuration, throughput quota, or parts request? Send us your message. Our design unit will draft an initial proposal within 24 hours.
                 </p>
 
-                <div className="space-y-4 pt-4">
-                  <div className="flex gap-4 items-center">
-                    <div className="bg-[#fefce8] text-[#ca8a04] p-3 rounded-full shrink-0 border border-[#fef08a]">
-                      <Phone size={20} />
-                    </div>
-                    <div>
-                      <span className="block text-xs font-bold text-slate-400 uppercase">Call Support</span>
-                      <a href="tel:+919876543210" className="text-sm font-bold text-slate-800 hover:text-[#ca8a04] transition-colors font-sans">+91 98765 43210</a>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 items-center">
-                    <div className="bg-[#fefce8] text-[#ca8a04] p-3 rounded-full shrink-0 border border-[#fef08a]">
-                      <Mail size={20} />
-                    </div>
-                    <div>
-                      <span className="block text-xs font-bold text-slate-400 uppercase font-sans">Business Email</span>
-                      <a href="mailto:info@volgaasia.com" className="text-sm font-bold text-slate-800 hover:text-[#ca8a04] transition-colors font-sans">info@volgaasia.com</a>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 items-center">
-                    <div className="bg-[#fefce8] text-[#ca8a04] p-3 rounded-full shrink-0 border border-[#fef08a]">
-                      <MapPin size={20} />
-                    </div>
-                    <div>
-                      <span className="block text-xs font-bold text-slate-400 uppercase">Manufacturing HQ</span>
-                      <span className="text-sm font-bold text-slate-800 font-sans">Plot 140, Phase 2, Industrial Cluster, Delhi-NCR</span>
-                    </div>
-                  </div>
+                <div className="space-y-4 pt-2">
+                  {[
+                    { icon: Phone, label: "Call Support", value: "+91 98765 43210", href: "tel:+919876543210" },
+                    { icon: Mail, label: "Business Email", value: "info@kiranglobal.com", href: "mailto:info@kiranglobal.com" },
+                    { icon: MapPin, label: "Manufacturing HQ", value: "Plot 140, Phase 2, Industrial Cluster, Delhi-NCR", href: undefined },
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.label} className="flex gap-4 items-center">
+                        <div className="bg-[#1a35b8] text-[#f5c800] p-3 rounded-xl shrink-0 shadow-md">
+                          <Icon size={18} />
+                        </div>
+                        <div>
+                          <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{item.label}</span>
+                          {item.href ? (
+                            <a href={item.href} className="text-sm font-bold text-slate-800 hover:text-[#1a35b8] transition-colors">{item.value}</a>
+                          ) : (
+                            <span className="text-sm font-bold text-slate-800">{item.value}</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Right Column: Submission Form */}
+              {/* Right: Form */}
               <div className="lg:col-span-7">
-                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-lg">
-                  <h3 className="text-xl font-bold text-slate-800 mb-6 uppercase tracking-tight">
-                    Submit Quote Request
-                  </h3>
+                <div className="bg-white border border-blue-100 rounded-3xl p-6 sm:p-10 shadow-xl">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="h-8 w-1 bg-[#f5c800] rounded-full" />
+                    <h3 className="text-xl font-black text-[#0d1f6e] uppercase tracking-tight">Submit Quote Request</h3>
+                  </div>
 
                   {formSubmitted ? (
-                    <div className="bg-emerald-50 border border-emerald-250 p-6 rounded-2xl text-emerald-700 text-center animate-fade-in space-y-3">
-                      <CheckCircle className="mx-auto text-emerald-600" size={40} />
-                      <h4 className="font-bold text-lg">Thank You! Your Request Has Been Filed.</h4>
-                      <p className="text-xs font-sans">Our engineering division will analyze your details and respond shortly.</p>
+                    <div className="bg-emerald-50 border border-emerald-200 p-8 rounded-2xl text-emerald-700 text-center space-y-3">
+                      <CheckCircle className="mx-auto text-emerald-500" size={44} />
+                      <h4 className="font-black text-lg text-emerald-800">Thank You! Request Filed.</h4>
+                      <p className="text-xs">Our engineering division will analyze your details and respond shortly.</p>
                     </div>
                   ) : (
                     <form onSubmit={handleFormSubmit} className="space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold text-slate-650 uppercase mb-1.5 font-sans">Your Name *</label>
+                          <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Your Name *</label>
                           <input
-                            type="text"
-                            name="name"
-                            required
-                            value={formData.name}
-                            onChange={handleFormChange}
+                            type="text" name="name" required value={formData.name} onChange={handleFormChange}
                             placeholder="John Doe"
-                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 font-sans"
+                            className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-slate-650 uppercase mb-1.5 font-sans">Business Email *</label>
+                          <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Business Email *</label>
                           <input
-                            type="email"
-                            name="email"
-                            required
-                            value={formData.email}
-                            onChange={handleFormChange}
+                            type="email" name="email" required value={formData.email} onChange={handleFormChange}
                             placeholder="john@company.com"
-                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 font-sans"
+                            className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800"
                           />
                         </div>
                       </div>
-
                       <div>
-                        <label className="block text-xs font-bold text-slate-655 uppercase mb-1.5 font-sans">Phone Number *</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Phone Number *</label>
                         <input
-                          type="tel"
-                          name="phone"
-                          required
-                          value={formData.phone}
-                          onChange={handleFormChange}
-                          placeholder="+1 (234) 567-890"
-                          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 font-sans"
+                          type="tel" name="phone" required value={formData.phone} onChange={handleFormChange}
+                          placeholder="+91 98765 43210"
+                          className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800"
                         />
                       </div>
-
                       <div>
-                        <label className="block text-xs font-bold text-slate-655 uppercase mb-1.5 font-sans">Job Requirements / Details *</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Job Requirements / Details *</label>
                         <textarea
-                          name="message"
-                          required
-                          rows={4}
-                          value={formData.message}
-                          onChange={handleFormChange}
+                          name="message" required rows={4} value={formData.message} onChange={handleFormChange}
                           placeholder="Provide details like expected throughput, stone material type, feeding size, etc..."
-                          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#facc15] transition-colors text-slate-800 resize-none font-sans"
-                        ></textarea>
+                          className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800 resize-none"
+                        />
                       </div>
-
                       <button
                         type="submit"
-                        className="w-full bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold p-4 rounded-xl text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all text-center cursor-pointer"
+                        className="w-full bg-[#1a35b8] hover:bg-[#0d1f6e] text-white font-black p-4 rounded-xl text-xs uppercase tracking-widest shadow-lg hover:shadow-xl hover:shadow-blue-900/25 transition-all cursor-pointer flex items-center justify-center gap-2"
                       >
-                        Send Inquiry Now
+                        <span>Send Inquiry Now</span>
+                        <ArrowRight size={15} />
                       </button>
                     </form>
                   )}
@@ -929,71 +944,82 @@ export default function Home() {
             </div>
           </div>
         </section>
-
       </main>
 
-      {/* Footer Design */}
-      <footer className="bg-slate-950 text-white pt-16 pb-8 border-t border-slate-900">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/5">
+      {/* ── FOOTER ──────────────────────────────────────────────────────── */}
+      <footer className="bg-[#0d1f6e] text-white pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/10">
           {/* Logo & Intro */}
           <div className="space-y-4">
-            <div className="relative flex items-center h-12 w-48 bg-white p-2 rounded-lg">
-              <Image
-                src="/logo.png"
-                alt="Volga Asia Logo Footer"
-                fill
-                className="object-contain p-1"
-              />
+            <div className="relative flex items-center h-14 w-52 bg-white p-2 rounded-xl">
+              <Image src="/logo.png" alt="Kiran Global Logo" fill className="object-contain p-1" />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed font-sans">
-              Volga Asia manufactures high performance fixed crushers, vibratory screeners, and modular machinery configured for severe industrial requirements.
+            <p className="text-xs text-blue-200 leading-relaxed">
+              Kiran Global manufactures high performance fixed crushers, vibratory screeners, and modular machinery configured for severe industrial requirements.
             </p>
           </div>
 
-          {/* Navbar Links */}
+          {/* Useful Links */}
           <div className="space-y-4">
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#facc15] border-l-2 border-[#facc15] pl-3 font-sans">Useful Links</h4>
-            <ul className="space-y-2 text-xs text-slate-400 font-sans">
-              <li><a href="#home" className="hover:text-[#facc15] transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-[#facc15] transition-colors">About Us</a></li>
-              <li><a href="#products" className="hover:text-[#facc15] transition-colors">Products & specs</a></li>
-              <li><a href="#infrastructure" className="hover:text-[#facc15] transition-colors">Infrastructures</a></li>
-              <li><a href="#contact" className="hover:text-[#facc15] transition-colors">Contact Sales</a></li>
+            <h4 className="font-black text-sm uppercase tracking-wider text-[#f5c800] border-l-2 border-[#f5c800] pl-3">Useful Links</h4>
+            <ul className="space-y-2 text-xs text-blue-200">
+              {[
+                { href: "#home", label: "Home" },
+                { href: "#about", label: "About Us" },
+                { href: "#products", label: "Products & Specs" },
+                { href: "#infrastructure", label: "Infrastructures" },
+                { href: "#faq", label: "FAQ" },
+                { href: "#contact", label: "Contact Sales" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} className="hover:text-[#f5c800] transition-colors flex items-center gap-2 group">
+                    <span className="h-px w-3 bg-[#f5c800]/40 group-hover:w-5 group-hover:bg-[#f5c800] transition-all duration-200" />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Products links */}
+          {/* Equipment Links */}
           <div className="space-y-4">
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#facc15] border-l-2 border-[#facc15] pl-3 font-sans">Equipments</h4>
-            <ul className="space-y-2 text-xs text-slate-400 font-sans">
-              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Primary Jaw Crusher</span></li>
-              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Hydraulic Cone Crusher</span></li>
-              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Heavy Duty Feeder</span></li>
-              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Vibratory Screening Unit</span></li>
-              <li><span className="hover:text-[#facc15] cursor-pointer transition-colors">Sand Washing Setup</span></li>
+            <h4 className="font-black text-sm uppercase tracking-wider text-[#f5c800] border-l-2 border-[#f5c800] pl-3">Equipments</h4>
+            <ul className="space-y-2 text-xs text-blue-200">
+              {["Primary Jaw Crusher", "Hydraulic Cone Crusher", "Heavy Duty Feeder", "Vibratory Screening Unit", "Sand Washing Setup"].map((item) => (
+                <li key={item}>
+                  <span className="hover:text-[#f5c800] cursor-pointer transition-colors flex items-center gap-2 group">
+                    <span className="h-px w-3 bg-[#f5c800]/40 group-hover:w-5 group-hover:bg-[#f5c800] transition-all duration-200" />
+                    {item}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Newsletter / Notice */}
+          {/* Contact */}
           <div className="space-y-4">
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-[#facc15] border-l-2 border-[#facc15] pl-3 font-sans">Global Hotline</h4>
-            <div className="space-y-2 text-xs text-slate-400 font-sans">
+            <h4 className="font-black text-sm uppercase tracking-wider text-[#f5c800] border-l-2 border-[#f5c800] pl-3">Global Hotline</h4>
+            <div className="space-y-3 text-xs text-blue-200">
               <p>For custom engineering and site blueprints:</p>
-              <a href="tel:+919876543210" className="inline-block bg-[#facc15] hover:bg-[#eab308] text-slate-950 font-extrabold px-4 py-2 rounded mt-2 transition-all">
+              <a
+                href="tel:+919876543210"
+                className="inline-flex items-center gap-2 bg-[#f5c800] hover:bg-[#e8bb00] text-[#0d1f6e] font-black px-5 py-3 rounded-xl mt-1 transition-all hover:shadow-lg shadow-md"
+              >
+                <Phone size={14} />
                 +91 98765 43210
               </a>
-              <p className="text-[10px] text-slate-500 pt-1 font-sans">Working Hours: 09:00 AM - 06:00 PM (IST)</p>
+              <p className="text-[10px] text-blue-300 pt-1">Working Hours: 09:00 AM – 06:00 PM (IST)</p>
             </div>
           </div>
         </div>
 
-        {/* Copyright bar */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500 gap-4 font-sans">
-          <p>© {new Date().getFullYear()} Volga Asia Machinery. All rights reserved.</p>
+        {/* Copyright */}
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-blue-300 gap-4">
+          <p>© {new Date().getFullYear()} Kiran Global — M.S. Jain Group. All rights reserved.</p>
           <div className="flex gap-6">
-            <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>
-            <span className="hover:text-slate-400 cursor-pointer">Terms & Conditions</span>
-            <span className="hover:text-slate-400 cursor-pointer">Sitemap</span>
+            <span className="hover:text-[#f5c800] cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="hover:text-[#f5c800] cursor-pointer transition-colors">Terms & Conditions</span>
+            <span className="hover:text-[#f5c800] cursor-pointer transition-colors">Sitemap</span>
           </div>
         </div>
       </footer>
