@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f0f6fb;
-  --foreground: #0d1f6e; /* Kiran Global Navy */
+  --background: #e8f4ff;
+  --foreground: #003d7a; /* Kiran Global Deep Blue */
 }
 
 @theme {
-  /* ── Kiran Global Brand Colors (from logo) ─────────────────────── */
-  --color-brand-blue: #1a35b8;      /* Royal Blue – logo triangle */
-  --color-brand-navy: #0d1f6e;      /* Deep Navy – logo banner */
-  --color-brand-yellow: #f5c800;    /* Golden Yellow – sunburst rays */
+  /* ── Kiran Global Brand Colors (Updated Theme #0072CE) ────────────── */
+  --color-brand-blue: #0072CE;      /* Primary Blue – main brand color */
+  --color-brand-navy: #003d7a;      /* Deep Navy – dark accents */
+  --color-brand-yellow: #f5c800;    /* Golden Yellow – accent */
   --color-brand-sky: #4db8e8;       /* Sky Blue – globe */
-  --color-brand-light: #e8f0fe;     /* Light Blue – backgrounds */
+  --color-brand-light: #e8f4ff;     /* Light Blue – backgrounds */
   --font-sans: var(--font-plus-jakarta-sans);
 }
 
@@ -27,19 +27,19 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #e8f0fe;
+  background: #e8f4ff;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1a35b8;
+  background: #0072CE;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0d1f6e;
+  background: #003d7a;
 }
 
 /* ── Selection color matches brand ─────────────────────────────────── */
 ::selection {
-  background: #1a35b8;
+  background: #0072CE;
   color: #ffffff;
 }
 

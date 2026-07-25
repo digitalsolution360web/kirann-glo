@@ -175,10 +175,10 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#f0f6fb] font-sans selection:bg-[#1a35b8] selection:text-white">
+    <div className="relative min-h-screen flex flex-col bg-[#e8f4ff] font-sans selection:bg-[#0072CE] selection:text-white">
 
       {/* ── TOP UTILITY BAR ─────────────────────────────────────────────── */}
-      <div className="bg-[#1a35b8] text-blue-100 py-2 font-sans text-xs hidden md:block relative z-50">
+      <div className="bg-[#0072CE] text-blue-100 py-2 font-sans text-xs hidden md:block relative z-50">
         <div className="w-full max-w-[1400px] mx-auto px-8 flex justify-between items-center">
           {/* Left: Contact info */}
           <div className="flex items-center gap-7">
@@ -217,7 +217,7 @@ export default function Home() {
           }`}
       >
         {/* Bottom thin accent line */}
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#1a35b8] via-[#f5c800] to-[#1a35b8] opacity-70" />
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#0072CE] via-[#f5c800] to-[#0072CE] opacity-70" />
 
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8">
           <div className="flex items-center justify-between py-2.5">
@@ -247,8 +247,8 @@ export default function Home() {
                   className={`
                     relative px-6 py-2 text-sm font-semibold rounded-lg transition-all duration-250 group overflow-hidden
                     ${activeNav === item.id
-                      ? "text-white bg-[#1a35b8] shadow-md shadow-blue-700/30"
-                      : "text-[#0d1f6e] hover:text-white hover:bg-[#1a35b8] hover:shadow-md hover:shadow-blue-700/30"
+                      ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
+                      : "text-[#003d7a] hover:text-white hover:bg-[#0072CE] hover:shadow-md hover:shadow-blue-700/30"
                     }
                   `}
                 >
@@ -268,7 +268,7 @@ export default function Home() {
                 className="
                   relative overflow-hidden ml-1 px-6 py-2.5 rounded-full text-xs font-black
                   uppercase tracking-widest text-white
-                  bg-gradient-to-r from-[#1a35b8] to-[#0d1f6e]
+                  bg-gradient-to-r from-[#0072CE] to-[#003d7a]
                   shadow-md shadow-blue-800/30
                   hover:shadow-xl hover:shadow-blue-800/40
                   hover:scale-105 active:scale-95
@@ -287,7 +287,7 @@ export default function Home() {
             {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2.5 rounded-xl text-[#0d1f6e] hover:bg-[#1a35b8] hover:text-white transition-all border border-slate-200 hover:border-[#1a35b8] shadow-sm"
+              className="lg:hidden p-2.5 rounded-xl text-[#003d7a] hover:bg-[#0072CE] hover:text-white transition-all border border-slate-200 hover:border-[#0072CE] shadow-sm"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -311,8 +311,8 @@ export default function Home() {
                 className={`
                   flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200
                   ${activeNav === item.id
-                    ? "bg-[#1a35b8] text-white shadow-md shadow-blue-700/30"
-                    : "text-[#0d1f6e] bg-slate-50 hover:bg-[#1a35b8] hover:text-white hover:shadow-md hover:shadow-blue-700/20"
+                    ? "bg-[#0072CE] text-white shadow-md shadow-blue-700/30"
+                    : "text-[#003d7a] bg-slate-50 hover:bg-[#0072CE] hover:text-white hover:shadow-md hover:shadow-blue-700/20"
                   }
                 `}
               >
@@ -327,7 +327,7 @@ export default function Home() {
             <a
               href="#contact"
               onClick={() => { setActiveNav("contact"); setMobileMenuOpen(false); }}
-              className="mt-2 flex items-center justify-center gap-2 bg-gradient-to-r from-[#1a35b8] to-[#0d1f6e] text-white font-black py-4 px-6 rounded-xl text-sm uppercase tracking-wider shadow-lg transition-all hover:shadow-xl"
+              className="mt-2 flex items-center justify-center gap-2 bg-gradient-to-r from-[#0072CE] to-[#003d7a] text-white font-black py-4 px-6 rounded-xl text-sm uppercase tracking-wider shadow-lg transition-all hover:shadow-xl"
             >
               <Phone size={15} />
               Get a Free Quote
@@ -345,7 +345,7 @@ export default function Home() {
               key={index}
               className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"}`}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f6e]/70 via-black/30 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#003d7a]/70 via-black/30 to-transparent z-10" />
               <Image
                 src={slide.image}
                 alt="Kiran Global Banner"
@@ -388,9 +388,9 @@ export default function Home() {
         {/* ── ABOUT SECTION ───────────────────────────────────────────────── */}
         <section id="about" className="relative py-20 bg-white overflow-hidden">
           {/* Decorative background */}
-          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-[#f0f6fb] to-transparent pointer-events-none" />
-          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border-2 border-[#1a35b8]/5 pointer-events-none" />
-          <div className="absolute -right-48 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#1a35b8]/5 pointer-events-none" />
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-[#e8f4ff] to-transparent pointer-events-none" />
+          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border-2 border-[#0072CE]/5 pointer-events-none" />
+          <div className="absolute -right-48 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#0072CE]/5 pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -400,10 +400,10 @@ export default function Home() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
-                    <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">About Us</span>
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">About Us</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0d1f6e] tracking-tight leading-tight">
-                    About <span className="text-[#1a35b8]">Kiran Global</span>
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#003d7a] tracking-tight leading-tight">
+                    About <span className="text-[#0072CE]">Kiran Global</span>
                   </h2>
                 </div>
 
@@ -416,8 +416,8 @@ export default function Home() {
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="bg-[#0d1f6e] p-5 rounded-2xl shadow-lg border border-blue-900/50 relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#1a35b8] to-[#0d1f6e]" />
+                  <div className="bg-[#003d7a] p-5 rounded-2xl shadow-lg border border-blue-900/50 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#0072CE] to-[#003d7a]" />
                     <div className="relative">
                       <div className="text-3xl font-black text-[#f5c800]">20+</div>
                       <div className="text-xs font-bold text-blue-200 mt-1 uppercase tracking-wider">Years Experience</div>
@@ -425,8 +425,8 @@ export default function Home() {
                   </div>
                   <div className="bg-[#f5c800] p-5 rounded-2xl shadow-lg relative overflow-hidden group">
                     <div className="relative">
-                      <div className="text-3xl font-black text-[#0d1f6e]">24+</div>
-                      <div className="text-xs font-bold text-[#0d1f6e]/70 mt-1 uppercase tracking-wider">Industries Served</div>
+                      <div className="text-3xl font-black text-[#003d7a]">24+</div>
+                      <div className="text-xs font-bold text-[#003d7a]/70 mt-1 uppercase tracking-wider">Industries Served</div>
                     </div>
                   </div>
                 </div>
@@ -436,7 +436,7 @@ export default function Home() {
               <div className="lg:col-span-6 flex justify-center items-center">
                 <div className="perspective-1000 w-full max-w-[460px] h-[360px] sm:h-[430px] group cursor-pointer relative">
                   <div className="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180">
-                    <div className="absolute inset-0 backface-hidden rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#1a35b8]/10">
+                    <div className="absolute inset-0 backface-hidden rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#0072CE]/10">
                       <div className="relative w-full h-full rounded-2xl overflow-hidden">
                         <Image src="/why-choose.jpeg" alt="Kiran Global Stationary Crusher" fill className="object-contain bg-white" priority />
                       </div>
@@ -448,7 +448,7 @@ export default function Home() {
                     </div>
                   </div>
                   {/* Flip hint */}
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#1a35b8]/50 uppercase tracking-widest whitespace-nowrap">
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#0072CE]/50 uppercase tracking-widest whitespace-nowrap">
                     Hover to flip
                   </div>
                 </div>
@@ -475,18 +475,18 @@ export default function Home() {
             </div>
           ))}
           {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f6e]/80 via-[#0d1f6e]/40 to-transparent z-[1]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-[1]" />
 
           <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6">
-            <div className="rounded-[28px] border-[5px] border-white/20 shadow-2xl overflow-hidden bg-transparent flex flex-col md:flex-row min-h-[380px] sm:min-h-[440px] backdrop-blur-sm">
+            <div className="rounded-[28px] border-[5px] border-white shadow-2xl overflow-hidden bg-transparent flex flex-col md:flex-row min-h-[380px] sm:min-h-[440px]">
               {/* Left transparent window */}
               <div className="flex-1 bg-transparent min-h-[200px] md:min-h-full" />
 
               {/* Right panel */}
-              <div className="w-full md:w-[400px] lg:w-[440px] bg-white/95 backdrop-blur-xl p-6 sm:p-8 flex flex-col justify-center border-t-[5px] md:border-t-0 md:border-l-[5px] border-white/20">
+              <div className="w-full md:w-[400px] lg:w-[440px] bg-white/96 backdrop-blur-2xl p-6 sm:p-8 flex flex-col justify-center shadow-2xl rounded-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="h-[3px] w-6 bg-[#f5c800] rounded-full" />
-                  <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Industries We Support</span>
+                  <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">Industries We Support</span>
                 </div>
                 <div className="space-y-2">
                   {INDUSTRIES_SUPPORTED.map((item, index) => {
@@ -497,15 +497,15 @@ export default function Home() {
                         key={item.id}
                         onMouseEnter={() => setActiveIndustryIndex(index)}
                         onClick={() => setActiveIndustryIndex(index)}
-                        className={`flex items-center gap-4 p-4 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? "bg-[#1a35b8] text-white shadow-md" : "bg-transparent hover:bg-blue-50 text-slate-700"
+                        className={`group flex items-center gap-4 p-4 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? "bg-[#0072CE] text-white shadow-md" : "bg-transparent hover:bg-gray-100 text-slate-700"
                           }`}
                       >
-                        <div className={`shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-[#f5c800] text-[#0d1f6e]" : "bg-[#e8f0fe] text-[#1a35b8]"
+                        <div className={`shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-white text-[#003d7a]" : "bg-gray-100 text-slate-500 group-hover:bg-gray-200 group-hover:text-slate-600"
                           }`}>
                           <IconComp size={20} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className={`text-sm font-bold tracking-tight leading-tight ${isActive ? "text-white" : "text-[#0d1f6e]"}`}>
+                          <h3 className={`text-sm font-bold tracking-tight leading-tight ${isActive ? "text-white" : "text-[#003d7a]"}`}>
                             {item.title}
                           </h3>
                           {isActive && (
@@ -524,7 +524,7 @@ export default function Home() {
         </section>
 
         {/* ── SUSTAINABILITY SECTION ──────────────────────────────────────── */}
-        <section className="py-16 sm:py-20 bg-[#f0f6fb] relative overflow-hidden border-y border-blue-100/60">
+        <section className="py-16 sm:py-20 bg-[#e8f4ff] relative overflow-hidden border-y border-blue-100/60">
           <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               <div className="lg:col-span-6 relative w-full h-[260px] sm:h-[320px] lg:h-[360px] rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-slate-200">
@@ -534,17 +534,17 @@ export default function Home() {
                 {/* Accent bar */}
                 <div className="flex items-center gap-3">
                   <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
-                  <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Commitment & Responsibility</span>
+                  <span className="text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">Commitment & Responsibility</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#0d1f6e] tracking-tight leading-tight">
-                  Building a <span className="text-[#1a35b8]">Sustainable</span> Future
+                <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#003d7a] tracking-tight leading-tight">
+                  Building a <span className="text-[#0072CE]">Sustainable</span> Future
                 </h2>
                 <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">
                   We are committed to environmentally responsible manufacturing practices that reduce environmental impact while maximizing efficiency. Our focus on sustainable innovation helps industries achieve better performance with lower environmental costs.
                 </p>
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 bg-[#1a35b8] hover:bg-[#0d1f6e] text-white font-bold px-7 py-3.5 rounded-full transition-all text-xs uppercase tracking-wider shadow-lg hover:shadow-xl hover:shadow-blue-900/25 hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-[#0072CE] hover:bg-[#003d7a] text-white font-bold px-7 py-3.5 rounded-full transition-all text-xs uppercase tracking-wider shadow-lg hover:shadow-xl hover:shadow-blue-900/25 hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <span>Learn More</span>
                   <ArrowRight size={15} />
@@ -552,8 +552,8 @@ export default function Home() {
 
                 {/* Feature cards */}
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-3 hover:border-[#1a35b8]/30 hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded-xl bg-[#e8f0fe] text-[#1a35b8] border border-blue-100 flex items-center justify-center shrink-0">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-3 hover:border-[#0072CE]/30 hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#e8f4ff] text-[#0072CE] border border-blue-100 flex items-center justify-center shrink-0">
                       <RefreshCw size={18} />
                     </div>
                     <div>
@@ -561,8 +561,8 @@ export default function Home() {
                       <p className="text-xs text-slate-500 mt-0.5">Optimised operations</p>
                     </div>
                   </div>
-                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-3 hover:border-[#1a35b8]/30 hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded-xl bg-[#e8f0fe] text-[#1a35b8] border border-blue-100 flex items-center justify-center shrink-0">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 flex items-start gap-3 hover:border-[#0072CE]/30 hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#e8f4ff] text-[#0072CE] border border-blue-100 flex items-center justify-center shrink-0">
                       <Wind size={18} />
                     </div>
                     <div>
@@ -582,10 +582,10 @@ export default function Home() {
             <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
               <div className="flex items-center justify-center gap-3">
                 <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
-                <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Product Catalog</span>
+                <span className="text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">Product Catalog</span>
                 <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0d1f6e] tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#003d7a] tracking-tight leading-tight">
                 Heavy Crushing & Screening Systems
               </h2>
               <p className="text-slate-500 text-sm sm:text-base leading-[1.7]">
@@ -600,8 +600,8 @@ export default function Home() {
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod.id)}
                   className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${selectedProduct === prod.id
-                    ? "bg-[#1a35b8] text-white border-[#1a35b8] shadow-md shadow-blue-900/20 scale-105"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-[#1a35b8] hover:text-[#1a35b8]"
+                    ? "bg-[#0072CE] text-white border-[#0072CE] shadow-md shadow-blue-900/20 scale-105"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-[#0072CE] hover:text-[#0072CE]"
                     }`}
                 >
                   {prod.name}
@@ -616,21 +616,21 @@ export default function Home() {
               return (
                 <div
                   key={prod.id}
-                  className="bg-[#f0f6fb] rounded-3xl p-6 sm:p-10 shadow-sm border border-blue-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center animate-slide-in"
+                  className="bg-[#e8f4ff] rounded-3xl p-6 sm:p-10 shadow-sm border border-blue-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center animate-slide-in"
                 >
                   <div className="lg:col-span-7 space-y-6">
                     <div className="flex items-center gap-4">
-                      <div className="bg-[#1a35b8] text-[#f5c800] p-4 rounded-2xl shadow-lg">
+                      <div className="bg-[#0072CE] text-[#f5c800] p-4 rounded-2xl shadow-lg">
                         <IconComp size={28} />
                       </div>
                       <div>
-                        <h3 className="text-2xl font-black text-[#0d1f6e]">{prod.name}</h3>
-                        <p className="text-xs font-bold text-[#1a35b8] uppercase tracking-wider mt-0.5">Heavy Industry Grade</p>
+                        <h3 className="text-2xl font-black text-[#003d7a]">{prod.name}</h3>
+                        <p className="text-xs font-bold text-[#0072CE] uppercase tracking-wider mt-0.5">Heavy Industry Grade</p>
                       </div>
                     </div>
                     <p className="text-slate-600 text-sm sm:text-base leading-[1.8]">{prod.description}</p>
                     <div className="space-y-3">
-                      <h4 className="font-bold text-[#0d1f6e] text-sm">Key Specifications:</h4>
+                      <h4 className="font-bold text-[#003d7a] text-sm">Key Specifications:</h4>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {prod.specs.map((spec, idx) => (
                           <div key={idx} className="bg-white border border-blue-100 p-3 rounded-xl text-center shadow-sm">
@@ -642,7 +642,7 @@ export default function Home() {
                     <div className="pt-4 flex flex-wrap gap-4">
                       <a
                         href="#contact"
-                        className="bg-[#1a35b8] hover:bg-[#0d1f6e] text-white font-bold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                        className="bg-[#0072CE] hover:bg-[#003d7a] text-white font-bold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2"
                       >
                         Request Quote
                         <ArrowRight size={13} />
@@ -657,9 +657,9 @@ export default function Home() {
                   </div>
                   <div className="lg:col-span-5 relative h-[250px] sm:h-[320px] rounded-2xl overflow-hidden bg-slate-900 border-4 border-white shadow-xl">
                     <Image src="/41.png" alt={prod.name} fill className="object-cover object-center" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f6e]/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#003d7a]/80 via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4">
-                      <span className="text-[10px] uppercase font-black tracking-widest bg-[#f5c800] text-[#0d1f6e] px-3 py-1.5 rounded-full shadow-md">
+                      <span className="text-[10px] uppercase font-black tracking-widest bg-[#f5c800] text-[#003d7a] px-3 py-1.5 rounded-full shadow-md">
                         Manufacturing Setup
                       </span>
                     </div>
@@ -671,16 +671,16 @@ export default function Home() {
         </section>
 
         {/* ── INFRASTRUCTURE SECTION ──────────────────────────────────────── */}
-        <section id="infrastructure" className="py-20 bg-[#f0f6fb] relative">
+        <section id="infrastructure" className="py-20 bg-[#e8f4ff] relative">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
-                    <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Infrastructure & Capabilities</span>
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">Infrastructure & Capabilities</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0d1f6e] tracking-tight leading-tight">
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#003d7a] tracking-tight leading-tight">
                     Precision Engineering & Quality Workmanship
                   </h2>
                 </div>
@@ -690,28 +690,28 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
                   <div className="flex gap-3 items-start">
-                    <div className="bg-[#1a35b8] text-[#f5c800] p-2.5 h-10 w-10 flex items-center justify-center rounded-xl shrink-0 shadow-md">
+                    <div className="bg-[#0072CE] text-[#f5c800] p-2.5 h-10 w-10 flex items-center justify-center rounded-xl shrink-0 shadow-md">
                       <Award size={18} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-[#0d1f6e] text-sm">Top-Tier Certification</h4>
+                      <h4 className="font-bold text-[#003d7a] text-sm">Top-Tier Certification</h4>
                       <p className="text-xs text-slate-500 mt-1">Products undergo rigid stress analysis before delivery.</p>
                     </div>
                   </div>
                   <div className="flex gap-3 items-start">
-                    <div className="bg-[#1a35b8] text-[#f5c800] p-2.5 h-10 w-10 flex items-center justify-center rounded-xl shrink-0 shadow-md">
+                    <div className="bg-[#0072CE] text-[#f5c800] p-2.5 h-10 w-10 flex items-center justify-center rounded-xl shrink-0 shadow-md">
                       <Clock size={18} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-[#0d1f6e] text-sm">High Load Capacity</h4>
+                      <h4 className="font-bold text-[#003d7a] text-sm">High Load Capacity</h4>
                       <p className="text-xs text-slate-500 mt-1">Engineered to support heavy throughput over longer intervals.</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white border-l-4 border-[#1a35b8] p-5 rounded-xl shadow-sm">
+                <div className="bg-white border-l-4 border-[#0072CE] p-5 rounded-xl shadow-sm">
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    <strong className="text-[#0d1f6e]">Notice:</strong> We offer custom configuration modules mapping specific hard ores like quartzite, basalt, granite, or river bed gravel. Ask our specialists to optimize the cavity configurations for maximum utility.
+                    <strong className="text-[#003d7a]">Notice:</strong> We offer custom configuration modules mapping specific hard ores like quartzite, basalt, granite, or river bed gravel. Ask our specialists to optimize the cavity configurations for maximum utility.
                   </p>
                 </div>
               </div>
@@ -719,11 +719,11 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="h-[250px] sm:h-[300px] relative rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-slate-100">
                   <Image src="/home-ab2.webp" alt="Workshop Facility" fill className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f6e]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#003d7a]/40 to-transparent" />
                 </div>
                 <div className="h-[250px] sm:h-[300px] relative rounded-2xl overflow-hidden shadow-xl translate-y-6 border-4 border-white bg-slate-100">
                   <Image src="/41.png" alt="Precision Assembly" fill className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f6e]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#003d7a]/40 to-transparent" />
                 </div>
               </div>
             </div>
@@ -731,7 +731,7 @@ export default function Home() {
         </section>
 
         {/* ── GLOBAL NETWORK SECTION ──────────────────────────────────────── */}
-        <section className="py-20 bg-[#0d1f6e] text-white relative overflow-hidden">
+        <section className="py-20 bg-[#003d7a] text-white relative overflow-hidden">
           {/* Background pattern */}
           <div className="absolute inset-0 opacity-5 world-grid-bg" />
           {/* Concentric circles */}
@@ -783,15 +783,15 @@ export default function Home() {
 
         {/* ── FAQ SECTION ─────────────────────────────────────────────────── */}
         <section id="faq" className="py-20 bg-white relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1a35b8] via-[#f5c800] to-[#1a35b8]" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#0072CE] via-[#f5c800] to-[#0072CE]" />
           <div className="max-w-4xl mx-auto px-6 sm:px-8 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
               <div className="flex items-center justify-center gap-3">
                 <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
-                <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Support Center</span>
+                <span className="text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">Support Center</span>
                 <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
               </div>
-              <h2 className="text-3xl sm:text-4xl font-black text-[#0d1f6e] tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#003d7a] tracking-tight leading-tight">
                 Frequently Asked Questions
               </h2>
               <p className="text-slate-500 text-sm sm:text-base leading-[1.7]">
@@ -805,24 +805,24 @@ export default function Home() {
                 return (
                   <div
                     key={index}
-                    className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? "border-[#1a35b8]/40 shadow-md shadow-blue-900/10" : "border-slate-200 hover:border-[#1a35b8]/30 hover:shadow-sm"
+                    className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? "border-[#0072CE]/40 shadow-md shadow-blue-900/10" : "border-slate-200 hover:border-[#0072CE]/30 hover:shadow-sm"
                       }`}
                   >
                     <button
                       onClick={() => setOpenFaq(isOpen ? null : index)}
                       className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 cursor-pointer select-none bg-white"
                     >
-                      <span className={`font-bold text-sm sm:text-base transition-colors ${isOpen ? "text-[#1a35b8]" : "text-slate-800"}`}>
+                      <span className={`font-bold text-sm sm:text-base transition-colors ${isOpen ? "text-[#0072CE]" : "text-slate-800"}`}>
                         {item.question}
                       </span>
-                      <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-[#1a35b8] text-white rotate-180" : "bg-slate-100 text-slate-500"}`}>
+                      <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-[#0072CE] text-white rotate-180" : "bg-slate-100 text-slate-500"}`}>
                         <ChevronDown size={16} />
                       </div>
                     </button>
                     <div
                       className={`transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-96" : "max-h-0"}`}
                     >
-                      <div className="px-6 py-5 bg-[#f0f6fb] border-t border-[#1a35b8]/10 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      <div className="px-6 py-5 bg-[#e8f4ff] border-t border-[#0072CE]/10 text-xs sm:text-sm text-slate-600 leading-relaxed">
                         {item.answer}
                       </div>
                     </div>
@@ -834,7 +834,7 @@ export default function Home() {
         </section>
 
         {/* ── CONTACT SECTION ─────────────────────────────────────────────── */}
-        <section id="contact" className="py-20 bg-[#f0f6fb] relative">
+        <section id="contact" className="py-20 bg-[#e8f4ff] relative">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
@@ -843,9 +843,9 @@ export default function Home() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <span className="h-[3px] w-8 bg-[#f5c800] rounded-full" />
-                    <span className="text-xs font-bold tracking-[0.2em] text-[#1a35b8] uppercase">Need Help?</span>
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#0072CE] uppercase">Need Help?</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#0d1f6e] tracking-tight leading-tight">
+                  <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#003d7a] tracking-tight leading-tight">
                     Connect With Our Engineers
                   </h2>
                 </div>
@@ -862,13 +862,13 @@ export default function Home() {
                     const Icon = item.icon;
                     return (
                       <div key={item.label} className="flex gap-4 items-center">
-                        <div className="bg-[#1a35b8] text-[#f5c800] p-3 rounded-xl shrink-0 shadow-md">
+                        <div className="bg-[#0072CE] text-[#f5c800] p-3 rounded-xl shrink-0 shadow-md">
                           <Icon size={18} />
                         </div>
                         <div>
                           <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{item.label}</span>
                           {item.href ? (
-                            <a href={item.href} className="text-sm font-bold text-slate-800 hover:text-[#1a35b8] transition-colors">{item.value}</a>
+                            <a href={item.href} className="text-sm font-bold text-slate-800 hover:text-[#0072CE] transition-colors">{item.value}</a>
                           ) : (
                             <span className="text-sm font-bold text-slate-800">{item.value}</span>
                           )}
@@ -884,7 +884,7 @@ export default function Home() {
                 <div className="bg-white border border-blue-100 rounded-3xl p-6 sm:p-10 shadow-xl">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="h-8 w-1 bg-[#f5c800] rounded-full" />
-                    <h3 className="text-xl font-black text-[#0d1f6e] uppercase tracking-tight">Submit Quote Request</h3>
+                    <h3 className="text-xl font-black text-[#003d7a] uppercase tracking-tight">Submit Quote Request</h3>
                   </div>
 
                   {formSubmitted ? (
@@ -901,7 +901,7 @@ export default function Home() {
                           <input
                             type="text" name="name" required value={formData.name} onChange={handleFormChange}
                             placeholder="John Doe"
-                            className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800"
+                            className="w-full bg-[#e8f4ff] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0072CE] focus:ring-2 focus:ring-[#0072CE]/10 transition-all text-slate-800"
                           />
                         </div>
                         <div>
@@ -909,7 +909,7 @@ export default function Home() {
                           <input
                             type="email" name="email" required value={formData.email} onChange={handleFormChange}
                             placeholder="john@company.com"
-                            className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800"
+                            className="w-full bg-[#e8f4ff] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0072CE] focus:ring-2 focus:ring-[#0072CE]/10 transition-all text-slate-800"
                           />
                         </div>
                       </div>
@@ -918,7 +918,7 @@ export default function Home() {
                         <input
                           type="tel" name="phone" required value={formData.phone} onChange={handleFormChange}
                           placeholder="+91 98765 43210"
-                          className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800"
+                          className="w-full bg-[#e8f4ff] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0072CE] focus:ring-2 focus:ring-[#0072CE]/10 transition-all text-slate-800"
                         />
                       </div>
                       <div>
@@ -926,12 +926,12 @@ export default function Home() {
                         <textarea
                           name="message" required rows={4} value={formData.message} onChange={handleFormChange}
                           placeholder="Provide details like expected throughput, stone material type, feeding size, etc..."
-                          className="w-full bg-[#f0f6fb] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a35b8] focus:ring-2 focus:ring-[#1a35b8]/10 transition-all text-slate-800 resize-none"
+                          className="w-full bg-[#e8f4ff] border border-blue-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0072CE] focus:ring-2 focus:ring-[#0072CE]/10 transition-all text-slate-800 resize-none"
                         />
                       </div>
                       <button
                         type="submit"
-                        className="w-full bg-[#1a35b8] hover:bg-[#0d1f6e] text-white font-black p-4 rounded-xl text-xs uppercase tracking-widest shadow-lg hover:shadow-xl hover:shadow-blue-900/25 transition-all cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full bg-[#0072CE] hover:bg-[#003d7a] text-white font-black p-4 rounded-xl text-xs uppercase tracking-widest shadow-lg hover:shadow-xl hover:shadow-blue-900/25 transition-all cursor-pointer flex items-center justify-center gap-2"
                       >
                         <span>Send Inquiry Now</span>
                         <ArrowRight size={15} />
@@ -947,7 +947,7 @@ export default function Home() {
       </main>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <footer className="bg-[#0d1f6e] text-white pt-16 pb-8">
+      <footer className="bg-[#003d7a] text-white pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/10">
           {/* Logo & Intro */}
           <div className="space-y-4">
