@@ -31,8 +31,10 @@ import {
 
 // Slide Data
 const SLIDES = [
-  { image: "/banner2.jpg" },
-  { image: "/41.png" }
+  { image: "/home-slider.webp" },
+  { image: "/70.webp" },
+  { image: "/71.webp" },
+  { image: "/72.webp" }
 ];
 
 // Product Data
@@ -71,30 +73,26 @@ const PRODUCTS = [
 const INDUSTRIES_SUPPORTED = [
   {
     id: "sodio-lumps",
-    title: "Silicato di Sodio in Lumps",
-    description: "Crucial for industrial manufacturing, chemical processing, and detergent production.",
-    image: "/3.png",
+    title: "Sodium silicate liquid",
+    image: "/sodium-silicate-liquid.webp",
     icon: Settings
   },
   {
     id: "sodio-liquido",
-    title: "Silicato di Sodio Liquido",
-    description: "Key for adhesive formulations, concrete sealing, and water treatment standards.",
-    image: "/2.jpg",
+    title: "Sodium Silicate Lumps",
+    image: "/sodium-silicate-lumps.webp",
     icon: Shield
   },
   {
     id: "potassio-lumps",
-    title: "Silicato di Potassio in Lumps",
-    description: "High temperature resistant binding agent for specialized refractory materials.",
-    image: "/images (1).jpg",
+    title: "Premium Potassium Silicate Liquid",
+    image: "/premium-potassium-silicate-liquid.webp",
     icon: Globe
   },
   {
     id: "potassio-liquido",
-    title: "Silicato di Potassio Liquido",
-    description: "High-grade liquid formulation for precision agricultural & industrial applications.",
-    image: "/images.jpg",
+    title: "Potassium Silicate Lumps",
+    image: "/potassium-silicate-lumps.webp",
     icon: TrendingUp
   }
 ];
@@ -443,7 +441,7 @@ export default function Home() {
                     </div>
                     <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#f5c800]/30">
                       <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                        <Image src="/41.png" alt="Kiran Global Mobile Crusher" fill className="object-contain bg-white" />
+                        {/* <Image src="/41.png" alt="Kiran Global Mobile Crusher" fill className="object-contain bg-white" /> */}
                       </div>
                     </div>
                   </div>
@@ -508,11 +506,7 @@ export default function Home() {
                           <h3 className={`text-sm font-bold tracking-tight leading-tight ${isActive ? "text-white" : "text-[#003d7a]"}`}>
                             {item.title}
                           </h3>
-                          {isActive && (
-                            <p className="text-[11px] text-blue-100 mt-1 leading-tight">
-                              {item.description}
-                            </p>
-                          )}
+
                         </div>
                       </div>
                     );
