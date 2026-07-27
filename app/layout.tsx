@@ -13,8 +13,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Volga Asia Machinery",
-  description: "High Performance Crusher & Screening Systems",
+  title: "Kiran Italia Chemicals | Global Excellence in silicate",
+  description: "Global Excellence in silicate - Kiran Italia Chemicals",
+  icons: {
+    icon: "/fevicon.png",
+  },
 };
 
 export default function RootLayout({
