@@ -19,9 +19,9 @@ const GLOBE_RADIUS = 65;
 
 // ── Location data ────────────────────────────────────────────────────────────
 const LOCATIONS = [
-  { name: "Egypt",        lat: 26.0,  lon: 30.0, color: "#3b82f6", region: "North Africa"   },
-  { name: "UAE",          lat: 24.0,  lon: 54.0, color: "#10b981", region: "Middle East"    },
-  { name: "India",        lat: 21.0,  lon: 78.0, color: "#f97316", region: "South Asia"     },
+  { name: "Egypt", lat: 26.0, lon: 30.0, color: "#3b82f6", region: "North Africa" },
+  { name: "UAE", lat: 24.0, lon: 54.0, color: "#10b981", region: "Middle East" },
+  { name: "India", lat: 21.0, lon: 78.0, color: "#f97316", region: "South Asia" },
   { name: "South Africa", lat: -30.0, lon: 25.0, color: "#eab308", region: "Southern Africa" },
 ];
 
@@ -37,9 +37,9 @@ function latLonToVec3(lat: number, lon: number, radius: number): THREE.Vector3 {
 
 // ── Component ────────────────────────────────────────────────────────────────
 const LocationsGlobe = () => {
-  const containerRef      = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const labelContainerRef = useRef<HTMLDivElement>(null);
-  const controlsRef       = useRef<OrbitControls | null>(null);
+  const controlsRef = useRef<OrbitControls | null>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   // ── Three.js scene setup ──────────────────────────────────────────────────
@@ -49,11 +49,11 @@ const LocationsGlobe = () => {
     const timer = setTimeout(() => {
       if (!containerRef.current || !labelContainerRef.current) return;
 
-      const width  = containerRef.current.clientWidth;
+      const width = containerRef.current.clientWidth;
       const height = containerRef.current.clientHeight;
 
       // Scene & camera
-      const scene  = new THREE.Scene();
+      const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
       camera.position.set(120, 60, 220);
 
@@ -67,8 +67,8 @@ const LocationsGlobe = () => {
       // CSS2D label renderer
       const labelRenderer = new CSS2DRenderer();
       labelRenderer.setSize(width, height);
-      labelRenderer.domElement.style.position   = "absolute";
-      labelRenderer.domElement.style.top        = "0";
+      labelRenderer.domElement.style.position = "absolute";
+      labelRenderer.domElement.style.top = "0";
       labelRenderer.domElement.style.pointerEvents = "none";
       labelContainerRef.current.appendChild(labelRenderer.domElement);
 
@@ -81,13 +81,13 @@ const LocationsGlobe = () => {
       scene.add(sunLight);
 
       // Earth globe
-      const loader       = new THREE.TextureLoader();
+      const loader = new THREE.TextureLoader();
       const earthTexture = loader.load(EARTH_TEXTURE_URL);
       earthTexture.colorSpace = THREE.SRGBColorSpace;
 
       const globeGeo = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
       const globeMat = new THREE.MeshPhongMaterial({
-        map:       earthTexture,
+        map: earthTexture,
         shininess: 10,
       });
       const earth = new THREE.Mesh(globeGeo, globeMat);
@@ -105,17 +105,17 @@ const LocationsGlobe = () => {
         // Dot marker
         const dotGeo = new THREE.SphereGeometry(2.2, 16, 16);
         const dotMat = new THREE.MeshBasicMaterial({ color: loc.color });
-        const dot    = new THREE.Mesh(dotGeo, dotMat);
+        const dot = new THREE.Mesh(dotGeo, dotMat);
         dot.position.copy(surfacePos);
         markerGroup.add(dot);
 
         // Ring around dot
         const ringGeo = new THREE.RingGeometry(3.5, 6, 32);
         const ringMat = new THREE.MeshBasicMaterial({
-          color:       loc.color,
+          color: loc.color,
           transparent: true,
-          opacity:     0.5,
-          side:        THREE.DoubleSide,
+          opacity: 0.5,
+          side: THREE.DoubleSide,
         });
         const ring = new THREE.Mesh(ringGeo, ringMat);
         ring.position.copy(surfacePos);
@@ -124,21 +124,21 @@ const LocationsGlobe = () => {
 
         // CSS2D label
         const labelDiv = document.createElement("div");
-        labelDiv.className               = "label-node";
-        labelDiv.style.color             = "white";
-        labelDiv.style.fontFamily        = "Inter, sans-serif";
-        labelDiv.style.fontSize          = "14px";
-        labelDiv.style.fontWeight        = "800";
-        labelDiv.style.padding           = "8px 16px";
-        labelDiv.style.background        = "rgba(2,6,23,0.95)";
-        labelDiv.style.backdropFilter    = "blur(12px)";
-        labelDiv.style.borderRadius      = "12px";
-        labelDiv.style.border            = `2px solid ${loc.color}`;
-        labelDiv.style.boxShadow         = `0 10px 40px -10px ${loc.color}`;
-        labelDiv.style.whiteSpace        = "nowrap";
-        labelDiv.style.transition        = "opacity 0.5s ease, visibility 0.5s ease";
-        labelDiv.style.pointerEvents     = "none";
-        labelDiv.textContent             = loc.name;
+        labelDiv.className = "label-node";
+        labelDiv.style.color = "white";
+        labelDiv.style.fontFamily = "Inter, sans-serif";
+        labelDiv.style.fontSize = "14px";
+        labelDiv.style.fontWeight = "800";
+        labelDiv.style.padding = "8px 16px";
+        labelDiv.style.background = "rgba(2,6,23,0.95)";
+        labelDiv.style.backdropFilter = "blur(12px)";
+        labelDiv.style.borderRadius = "12px";
+        labelDiv.style.border = `2px solid ${loc.color}`;
+        labelDiv.style.boxShadow = `0 10px 40px -10px ${loc.color}`;
+        labelDiv.style.whiteSpace = "nowrap";
+        labelDiv.style.transition = "opacity 0.5s ease, visibility 0.5s ease";
+        labelDiv.style.pointerEvents = "none";
+        labelDiv.textContent = loc.name;
 
         const label = new CSS2DObject(labelDiv);
         label.position.copy(surfacePos).multiplyScalar(1.03);
@@ -148,18 +148,18 @@ const LocationsGlobe = () => {
 
       // Orbit controls
       const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping    = true;
-      controls.dampingFactor    = 0.05;
-      controls.enableZoom       = false;
-      controls.autoRotate       = true;
-      controls.autoRotateSpeed  = 0.8;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.enableZoom = false;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.8;
       controls.update();
       controlsRef.current = controls;
 
       // Animation loop
       const cameraPos = new THREE.Vector3();
-      const labelPos  = new THREE.Vector3();
-      const earthPos  = new THREE.Vector3();
+      const labelPos = new THREE.Vector3();
+      const earthPos = new THREE.Vector3();
 
       const animate = () => {
         requestAnimationFrame(animate);
@@ -174,13 +174,13 @@ const LocationsGlobe = () => {
           const dist = labelPos.distanceTo(cameraPos);
 
           if (dist > distToCenter + 15) {
-            label.element.style.opacity    = "0";
+            label.element.style.opacity = "0";
             label.element.style.visibility = "hidden";
-            label.element.style.transform  = "scale(0.7)";
+            label.element.style.transform = "scale(0.7)";
           } else {
-            label.element.style.opacity    = "1";
+            label.element.style.opacity = "1";
             label.element.style.visibility = "visible";
-            label.element.style.transform  = "scale(1)";
+            label.element.style.transform = "scale(1)";
           }
         });
 
@@ -210,7 +210,7 @@ const LocationsGlobe = () => {
 
     return () => {
       clearTimeout(timer);
-      if (containerRef.current)      containerRef.current.innerHTML      = "";
+      if (containerRef.current) containerRef.current.innerHTML = "";
       if (labelContainerRef.current) labelContainerRef.current.innerHTML = "";
     };
   }, []);
@@ -247,7 +247,7 @@ const LocationsGlobe = () => {
         }}
       />
 
-      <div className="max-w-[1300px] mx-auto px-6 sm:px-8 relative z-10 py-10">
+      <div className="max-w-[1700px] mx-auto px-6 sm:px-8 relative z-10 py-10">
 
         {/* ── Section header ── */}
         <div className="text-center mb-6">
@@ -330,8 +330,8 @@ const LocationsGlobe = () => {
                       className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm transition-all duration-300 group-hover:bg-white/20 group-hover:shadow-none"
                       style={{
                         background: `${loc.color}18`,
-                        border:     `1.5px solid ${loc.color}50`,
-                        color:       loc.color,
+                        border: `1.5px solid ${loc.color}50`,
+                        color: loc.color,
                       }}
                     >
                       <MapPin
@@ -351,7 +351,7 @@ const LocationsGlobe = () => {
                         className="relative block w-2.5 h-2.5 rounded-full group-hover:bg-white transition-colors duration-300"
                         style={{
                           backgroundColor: loc.color,
-                          boxShadow:       `0 0 6px ${loc.color}`,
+                          boxShadow: `0 0 6px ${loc.color}`,
                         }}
                       />
                     </div>
@@ -384,9 +384,9 @@ const LocationsGlobe = () => {
               className="flex items-center justify-between gap-2 px-5 py-4 rounded-2xl border border-[#f5c800]/40 bg-[#001e4d]/90 shadow-[0_4px_24px_rgba(245,200,0,0.1)]"
             >
               {[
-                { value: "4",   label: "Continents" },
-                { value: "20+", label: "Countries"  },
-                { value: "24/7",label: "Support"    },
+                { value: "4", label: "Continents" },
+                { value: "20+", label: "Countries" },
+                { value: "24/7", label: "Support" },
               ].map((stat, i) => (
                 <React.Fragment key={stat.label}>
                   {i > 0 && (
