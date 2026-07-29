@@ -2,14 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Phone, Mail, Clock, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { Phone, Mail, Menu, X } from "lucide-react";
 
 export const NAV_LINKS = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "products", label: "Products" },
-  { id: "infrastructure", label: "Infrastructure" },
-  { id: "faq", label: "FAQ" },
+  { id: "home", label: "Home", href: "/#home" },
+  { id: "about", label: "About", href: "/#about" },
+  { id: "products", label: "Products", href: "/#products" },
+  { id: "infrastructure", label: "Infrastructure", href: "/#infrastructure" },
+  { id: "careers", label: "Careers", href: "/careers" },
+  { id: "gallery", label: "Gallery", href: "/gallery" },
+  { id: "faq", label: "FAQ", href: "/#faq" },
 ];
 
 export default function Navbar() {
@@ -28,20 +31,29 @@ export default function Navbar() {
     <>
       {/* ── TOP UTILITY BAR ─────────────────────────────────────────────── */}
       <div className="bg-[#0072CE] text-blue-100 py-2.5 font-sans text-xs hidden md:block relative z-50">
-        <div className="w-full max-w-[1300px] ml-45 px-6 sm:px-8 flex items-center gap-5">
-          <span className="flex items-center gap-2 font-bold text-white">
-            <Clock size={11} className="text-[#f5c800]" />
-            <span>INDIA UAE EGYPT SOUTH AFRICA</span>
-          </span>
-          <span className="text-blue-200/60 font-light">|</span>
-          <a href="tel:+393391192817" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 font-bold text-white group">
-            <Phone size={11} className="text-[#f5c800]" />
-            <span>  +91 73586 00595</span>
-          </a>
-          <a href="mailto:info@kiranitalia.it" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 font-bold text-white">
-            <Mail size={11} className="text-[#f5c800]" />
-            <span>info@kiranglobal.com</span>
-          </a>
+        <div className="w-full max-w-[1700px] mx-auto px-6 sm:px-8 flex items-center justify-between">
+          {/* Left side - Contact Info */}
+          <div className="flex items-center gap-5">
+            <a href="tel:+917358600595" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 font-bold text-white">
+              <Phone size={11} className="text-[#f5c800]" />
+              <span>+91 73586 00595</span>
+            </a>
+            <span className="text-blue-200/60 font-light">|</span>
+            <a href="mailto:info@kiranglobal.com" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 font-bold text-white">
+              <Mail size={11} className="text-[#f5c800]" />
+              <span>info@kiranglobal.com</span>
+            </a>
+          </div>
+          {/* Right side - Country Names */}
+          <div className="flex items-center gap-3 font-bold text-white text-[11px] tracking-wider">
+            <span>INDIA</span>
+            <span className="text-blue-200/50">•</span>
+            <span>UAE</span>
+            <span className="text-blue-200/50">•</span>
+            <span>EGYPT</span>
+            <span className="text-blue-200/50">•</span>
+            <span>SOUTH AFRICA</span>
+          </div>
         </div>
       </div>
 
@@ -58,10 +70,10 @@ export default function Navbar() {
         <div className="w-full max-w-[1700px] mx-auto px-8 sm:px-8">
           <div className="flex items-center justify-between py-2.5">
             {/* Logo */}
-            <a
-              href="#home"
+            <Link
+              href="/"
               onClick={() => setActiveNav("home")}
-              className="relative flex items-center h-14 w-14 cursor-pointer shrink-0"
+              className="relative flex items-center h-14 w-14 shrink-0"
             >
               <Image
                 src="/logo.png"
@@ -70,26 +82,30 @@ export default function Navbar() {
                 className="object-contain object-left"
                 priority
               />
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-3">
-              {NAV_LINKS.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={() => setActiveNav(item.id)}
-                  className={`
-                    relative px-6 py-2 text-sm font-semibold rounded-lg transition-all duration-250 group overflow-hidden
-                    ${activeNav === item.id
-                      ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
-                      : "text-[#003d7a] hover:text-white hover:bg-[#0072CE] hover:shadow-md hover:shadow-blue-700/30"
-                    }
-                  `}
-                >
-                  <span className="relative">{item.label}</span>
-                </a>
-              ))}
+            <nav className="hidden lg:flex items-center gap-2">
+              {NAV_LINKS.map((item) => {
+                const isPage = item.href.startsWith("/") && !item.href.startsWith("/#");
+                const Tag = isPage ? Link : "a";
+                return (
+                  <Tag
+                    key={item.id}
+                    href={item.href}
+                    onClick={() => setActiveNav(item.id)}
+                    className={`
+                      relative px-5 py-2 text-sm font-semibold rounded-lg transition-all duration-250 group overflow-hidden
+                      ${activeNav === item.id
+                        ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
+                        : "text-[#003d7a] hover:text-white hover:bg-[#0072CE] hover:shadow-md hover:shadow-blue-700/30"
+                      }
+                    `}
+                  >
+                    <span className="relative">{item.label}</span>
+                  </Tag>
+                );
+              })}
 
               {/* Divider */}
               <div className="h-7 w-px bg-slate-300 mx-3" />
@@ -136,29 +152,33 @@ export default function Navbar() {
           `}
         >
           <div className="bg-white border-t border-slate-100 px-5 pb-6 pt-3 flex flex-col gap-1.5 shadow-2xl shadow-blue-900/10">
-            {NAV_LINKS.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={() => {
-                  setActiveNav(item.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`
-                  flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200
-                  ${activeNav === item.id
-                    ? "bg-[#0072CE] text-white shadow-md shadow-blue-700/30"
-                    : "text-[#003d7a] bg-slate-50 hover:bg-[#0072CE] hover:text-white hover:shadow-md hover:shadow-blue-700/20"
-                  }
-                `}
-              >
-                <span className={`h-2 w-2 rounded-full shrink-0 transition-all ${activeNav === item.id ? "bg-[#f5c800]" : "bg-slate-300"}`} />
-                {item.label}
-                {activeNav === item.id && (
-                  <span className="ml-auto text-[10px] font-black uppercase tracking-wider text-blue-200">Active</span>
-                )}
-              </a>
-            ))}
+            {NAV_LINKS.map((item) => {
+              const isPage = item.href.startsWith("/") && !item.href.startsWith("/#");
+              const Tag = isPage ? Link : "a";
+              return (
+                <Tag
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => {
+                    setActiveNav(item.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`
+                    flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200
+                    ${activeNav === item.id
+                      ? "bg-[#0072CE] text-white shadow-md shadow-blue-700/30"
+                      : "text-[#003d7a] bg-slate-50 hover:bg-[#0072CE] hover:text-white hover:shadow-md hover:shadow-blue-700/20"
+                    }
+                  `}
+                >
+                  <span className={`h-2 w-2 rounded-full shrink-0 transition-all ${activeNav === item.id ? "bg-[#f5c800]" : "bg-slate-300"}`} />
+                  {item.label}
+                  {activeNav === item.id && (
+                    <span className="ml-auto text-[10px] font-black uppercase tracking-wider text-blue-200">Active</span>
+                  )}
+                </Tag>
+              );
+            })}
 
             <a
               href="#contact"

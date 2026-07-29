@@ -70,14 +70,14 @@ export default function GlobalPartnersSection() {
                   key={idx}
                   onMouseEnter={() => setIsPaused(true)}
                   onMouseLeave={() => setIsPaused(false)}
-                  className="group flex-shrink-0 flex items-center justify-center w-[180px] sm:w-[200px] h-[90px] sm:h-[100px] bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-[#0072CE]/30 hover:-translate-y-2 hover:bg-[#f0f7ff] transition-all duration-300 cursor-pointer px-6"
+                  className="group flex-shrink-0 flex items-center justify-center w-[180px] sm:w-[200px] h-[90px] sm:h-[100px] bg-white rounded-2xl border border-slate-100 shadow-sm  hover:border-[#0072CE]/30 transition-all duration-300 cursor-pointer px-6"
                 >
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={partner.logo}
                       alt={partner.name}
                       fill
-                      className="object-contain p-3 filter grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110"
+                      className="object-contain p-3 filter  transition-all duration-500 group-hover:scale-110"
                     />
                   </div>
                 </div>
