@@ -28,19 +28,19 @@ export default function Navbar() {
     <>
       {/* ── TOP UTILITY BAR ─────────────────────────────────────────────── */}
       <div className="bg-[#0072CE] text-blue-100 py-2.5 font-sans text-xs hidden md:block relative z-50">
-        <div className="w-full max-w-[1300px] mx-auto px-6 sm:px-8 flex items-center gap-5">
+        <div className="w-full max-w-[1300px] ml-45 px-6 sm:px-8 flex items-center gap-5">
           <span className="flex items-center gap-2 font-bold text-white">
             <Clock size={11} className="text-[#f5c800]" />
-            <span>Lun-ven (08:00-17:00)</span>
+            <span>INDIA UAE EGYPT SOUTH AFRICA</span>
           </span>
           <span className="text-blue-200/60 font-light">|</span>
           <a href="tel:+393391192817" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 font-bold text-white group">
             <Phone size={11} className="text-[#f5c800]" />
-            <span>+39 3391192817</span>
+            <span>  +91 73586 00595</span>
           </a>
           <a href="mailto:info@kiranitalia.it" className="flex items-center gap-2 hover:text-[#f5c800] transition-colors duration-200 font-bold text-white">
             <Mail size={11} className="text-[#f5c800]" />
-            <span>info@kiranitalia.it</span>
+            <span>info@kiranglobal.com</span>
           </a>
         </div>
       </div>

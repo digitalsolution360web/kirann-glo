@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import AnimatedCounter from "./AnimatedCounter";
 
 export default function AboutSection() {
   return (
@@ -37,37 +37,35 @@ export default function AboutSection() {
               <div className="bg-[#003d7a] p-5 rounded-2xl shadow-lg border border-blue-900/50 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0072CE] to-[#003d7a]" />
                 <div className="relative">
-                  <div className="text-3xl font-black text-[#f5c800]">20+</div>
+                  <div className="text-3xl font-black text-[#f5c800]">
+                    <AnimatedCounter target={20} suffix="+" duration={1800} />
+                  </div>
                   <div className="text-xs font-bold text-blue-200 mt-1 uppercase tracking-wider">Years Experience</div>
                 </div>
               </div>
               <div className="bg-[#f5c800] p-5 rounded-2xl shadow-lg relative overflow-hidden group">
                 <div className="relative">
-                  <div className="text-3xl font-black text-[#003d7a]">24+</div>
+                  <div className="text-3xl font-black text-[#003d7a]">
+                    <AnimatedCounter target={24} suffix="+" duration={1800} />
+                  </div>
                   <div className="text-xs font-bold text-[#003d7a]/70 mt-1 uppercase tracking-wider">Industries Served</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right: 3D Flip Card */}
-          <div className="lg:col-span-6 flex justify-center items-center">
-            <div className="perspective-1000 w-full max-w-[460px] h-[360px] sm:h-[430px] group cursor-pointer relative">
-              <div className="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180">
-                <div className="absolute inset-0 backface-hidden rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#0072CE]/10">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <Image src="/why-choose.jpeg" alt="Kiran Global Stationary Crusher" fill className="object-contain bg-white" priority />
-                  </div>
-                </div>
-                <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-3xl overflow-hidden shadow-2xl bg-white p-4 border-4 border-[#f5c800]/30">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    {/* <Image src="/41.png" alt="Kiran Global Mobile Crusher" fill className="object-contain bg-white" /> */}
-                  </div>
-                </div>
-              </div>
-              {/* Flip hint */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#0072CE]/50 uppercase tracking-widest whitespace-nowrap">
-                Hover to flip
+          {/* Right: YouTube Video Embed */}
+          <div className="lg:col-span-6 flex justify-center items-center w-full">
+            <div className="relative w-full max-w-[560px] aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-900 border-4 border-[#0072CE]/10 group transition-all duration-300 hover:border-[#0072CE]/30 hover:shadow-[#0072CE]/20 hover:shadow-2xl">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#0072CE] to-[#f5c800] rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black">
+                <iframe
+                  className="w-full h-full rounded-2xl border-0"
+                  src="https://www.youtube.com/embed/I9ofyu_3f_I?rel=0&modestbranding=1"
+                  title="Kiran Global Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
               </div>
             </div>
           </div>

@@ -4,14 +4,15 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import AboutSection from "./components/AboutSection";
+import WhoWeAreSection from "./components/WhoWeAreSection";
+import GlobalPartnersSection from "./components/GlobalPartnersSection";
 import IndustriesSection from "./components/IndustriesSection";
 import SustainabilitySection from "./components/SustainabilitySection";
 import CaseStudiesSection from "./components/CaseStudiesSection";
-import ProductsSection from "./components/ProductsSection";
-import InfrastructureSection from "./components/InfrastructureSection";
+import TestimonialsSection from "./components/TestimonialsSection";
+import KGCLNewsSection from "./components/KGCLNewsSection";
 import LocationsGlobe from "./components/LocationsGlobe";
 import GlobalNetworkSection from "./components/GlobalNetworkSection";
-import FaqSection from "./components/FaqSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
@@ -29,29 +30,37 @@ export default function Home() {
         {/* About Section */}
         <AboutSection />
 
+        {/* Global Partners Logo Marquee */}
+        <GlobalPartnersSection />
+
         {/* Industries Section */}
         <IndustriesSection />
 
+        {/* Who We Are / Why Choose Us / Working Area Tabs */}
+        <WhoWeAreSection />
+
         {/* Sustainability Section */}
         <SustainabilitySection />
+        <GlobalNetworkSection />
 
         {/* Case Studies Section */}
         <CaseStudiesSection />
 
-        {/* Products Section */}
-        <ProductsSection />
+        {/* Client Testimonials */}
+        <TestimonialsSection />
+
+        {/* KGCL News + Industries Overview */}
+        <KGCLNewsSection />
+
+
 
         {/* Infrastructure Section */}
-        <InfrastructureSection />
+        {/* <InfrastructureSection /> */}
 
         {/* Locations Globe Section */}
         <LocationsGlobe />
 
         {/* Global Network Section */}
-        <GlobalNetworkSection />
-
-        {/* FAQ Section */}
-        <FaqSection />
 
         {/* Contact Section */}
         <ContactSection />
