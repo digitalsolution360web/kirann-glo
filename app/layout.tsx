@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kiran Italia Chemicals | Global Excellence in silicate",
+  title: "Kiran Global Chems Limited - Kiran Global Chems Limited is a Worlds ... ",
   description: "Global Excellence in silicate - Kiran Italia Chemicals",
   icons: {
     icon: "/fevicon.png",

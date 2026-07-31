@@ -2,83 +2,145 @@
 
 import React from "react";
 import Image from "next/image";
-import { Phone } from "lucide-react";
-import { NAV_LINKS } from "./Navbar";
+import { MapPin, Mail, Phone } from "lucide-react";
+
+const companyQuickInfo = [
+  "Our Products",
+  "Our businesses",
+  "Our markets",
+  "AGM Notice",
+  "Our Responsibility",
+  "Code of Conduct",
+  "Investors",
+  "Latest News",
+  "Popular Blog",
+  "Resources",
+];
+
+const industriesWeServe = [
+  "SOAP & DETERGENTS",
+  "AGRICULTURE",
+  "COSMETICS",
+  "CONCRETE AND GENERAL",
+  "CERAMICS & REFRACTORY",
+  "METALS",
+  "CHEMICAL INJECTION",
+  "PETROLEUM & OIL DRILLING",
+  "FOUNDRIES",
+  "WATER TREATMENT",
+  "ADHESIVES",
+  "MINING AND MINERAL PROCESSING",
+  "TIMBER TREATMENT",
+  "FOOD INDUSTRY",
+  "AUTOMOTIVE REPAIR",
+];
+
+const bottomLinks = [
+  "CSR POLICY",
+  "TERMS & CONDITIONS",
+  "EVENTS",
+  "JOBS",
+  "VIDEO",
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#003d7a] text-white pt-16 pb-8">
-      <div className="max-w-[1700px] mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/10">
-        {/* Logo & Intro */}
-        <div className="space-y-4">
-          <div className="relative flex items-center h-14 w-52 bg-white p-2 rounded-xl">
+    <footer className="bg-[#003d7a] text-white">
+      {/* Main Grid */}
+      <div className="max-w-[1700px] mx-auto px-6 sm:px-10 pt-12 pb-10 grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-white/10">
+        {/* Logo & Social */}
+        <div className="flex flex-col gap-5">
+          <div className="relative flex items-center h-14 w-44 bg-white p-2 rounded-md">
             <Image src="/logo.png" alt="Kiran Global Logo" fill className="object-contain p-1" />
           </div>
-          <p className="text-xs text-blue-200 leading-relaxed">
-            Kiran Global manufactures high performance fixed crushers, vibratory screeners, and modular machinery configured for severe industrial requirements.
-          </p>
-        </div>
-
-        {/* Useful Links */}
-        <div className="space-y-4">
-          <h4 className="font-black text-sm uppercase tracking-wider text-[#f5c800] border-l-2 border-[#f5c800] pl-3">Useful Links</h4>
-          <ul className="space-y-2 text-xs text-blue-200">
-            {NAV_LINKS.map((link) => (
-              <li key={link.id}>
-                <a href={`#${link.id}`} className="hover:text-[#f5c800] transition-colors flex items-center gap-2 group">
-                  <span className="h-px w-3 bg-[#f5c800]/40 group-hover:w-5 group-hover:bg-[#f5c800] transition-all duration-200" />
-                  {link.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a href="#contact" className="hover:text-[#f5c800] transition-colors flex items-center gap-2 group">
-                <span className="h-px w-3 bg-[#f5c800]/40 group-hover:w-5 group-hover:bg-[#f5c800] transition-all duration-200" />
-                Contact Sales
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Equipment Links */}
-        <div className="space-y-4">
-          <h4 className="font-black text-sm uppercase tracking-wider text-[#f5c800] border-l-2 border-[#f5c800] pl-3">Equipments</h4>
-          <ul className="space-y-2 text-xs text-blue-200">
-            {["Primary Jaw Crusher", "Hydraulic Cone Crusher", "Heavy Duty Feeder", "Vibratory Screening Unit", "Sand Washing Setup"].map((item) => (
-              <li key={item}>
-                <span className="hover:text-[#f5c800] cursor-pointer transition-colors flex items-center gap-2 group">
-                  <span className="h-px w-3 bg-[#f5c800]/40 group-hover:w-5 group-hover:bg-[#f5c800] transition-all duration-200" />
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Contact */}
-        <div className="space-y-4">
-          <h4 className="font-black text-sm uppercase tracking-wider text-[#f5c800] border-l-2 border-[#f5c800] pl-3">Global Hotline</h4>
-          <div className="space-y-3 text-xs text-blue-200">
-            <p>For custom engineering and site blueprints:</p>
-            <a
-              href="tel:+393391192817"
-              className="inline-flex items-center gap-2 bg-[#f5c800] hover:bg-[#e8bb00] text-[#0d1f6e] font-black px-5 py-3 rounded-xl mt-1 transition-all hover:shadow-lg shadow-md"
-            >
-              <Phone size={14} />
-              +39 3391192817
-            </a>
-            <p className="text-[10px] text-blue-300 pt-1">Working Hours: Lun - Ven: 08:00 - 17:00</p>
+          <div className="flex items-center gap-2 mt-2">
+            <a href="#" className="w-8 h-8 border border-white/50 flex items-center justify-center text-xs font-black text-white hover:bg-[#f5c800] hover:text-[#003d7a] hover:border-[#f5c800] transition-all duration-200 rounded-sm">f</a>
+            <a href="#" className="w-8 h-8 border border-white/50 flex items-center justify-center text-xs font-black text-white hover:bg-[#f5c800] hover:text-[#003d7a] hover:border-[#f5c800] transition-all duration-200 rounded-sm">t</a>
+            <a href="#" className="w-8 h-8 border border-white/50 flex items-center justify-center text-xs font-black text-white hover:bg-[#f5c800] hover:text-[#003d7a] hover:border-[#f5c800] transition-all duration-200 rounded-sm">g+</a>
+            <a href="#" className="w-8 h-8 border border-white/50 flex items-center justify-center text-xs font-black text-white hover:bg-[#f5c800] hover:text-[#003d7a] hover:border-[#f5c800] transition-all duration-200 rounded-sm">in</a>
           </div>
+        </div>
+
+        {/* Contact Info */}
+        <div className="space-y-4">
+          <h4 className="font-black text-sm uppercase tracking-wider text-white border-b border-white/30 pb-2">
+            <span className="text-white font-black">CONTACT</span>{" "}
+            <span className="font-normal text-slate-200">INFO</span>
+          </h4>
+          <div className="space-y-3 text-xs leading-relaxed">
+            <p className="font-bold text-white">
+              CORPORATE IDENTITY NO. (CIN): U24299PY2002PLC000618 GSTIN: 33AABCK4882E8ZH
+            </p>
+            <div className="flex gap-2 items-start">
+              <MapPin size={13} className="shrink-0 mt-0.5 text-white" />
+              <div>
+                <p className="font-bold text-white mb-0.5">Head Office</p>
+                <p className="text-slate-200">No.104, Phlox Apartments, 1st Floor, F-2, Q-Block, 3rd Avenue, AnnaNagar, Chennai-600040, Tamilnadu, India.</p>
+              </div>
+            </div>
+            <div className="flex gap-2 items-start">
+              <Mail size={13} className="shrink-0 mt-0.5 text-white" />
+              <div>
+                <p className="font-bold text-white underline">Email</p>
+                <a href="mailto:info@kiranglobal.com" className="text-slate-200 hover:text-[#f5c800] transition-colors font-medium">
+                  info@kiranglobal.com
+                </a>
+              </div>
+            </div>
+            <div className="flex gap-2 items-start">
+              <Phone size={13} className="shrink-0 mt-0.5 text-white" />
+              <div>
+                <p className="font-bold text-white">Phone No</p>
+                <a href="tel:+917358600595" className="text-slate-200 hover:text-[#f5c800] transition-colors font-medium">
+                  +91 73586 00595
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Company Quick Info */}
+        <div className="space-y-4">
+          <h4 className="font-black text-sm uppercase tracking-wider text-white border-b border-white/30 pb-2">
+            <span className="text-white font-black">COMPANY</span>{" "}
+            <span className="font-normal text-slate-200">QUICK INFO</span>
+          </h4>
+          <ul className="space-y-1.5 text-xs">
+            {companyQuickInfo.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="text-[#f5c800] font-black text-sm leading-none">&#xBB;</span>
+                <a href="#" className="text-slate-200 hover:text-[#f5c800] transition-colors font-medium">{item}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Industrial We Serve */}
+        <div className="space-y-4">
+          <h4 className="font-black text-sm uppercase tracking-wider text-white border-b border-white/30 pb-2">
+            <span className="text-white font-black">INDUSTRIAL</span>{" "}
+            <span className="font-normal text-slate-200">WE SERVE</span>
+          </h4>
+          <ul className="space-y-1.5 text-xs">
+            {industriesWeServe.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="text-[#f5c800] font-black text-sm leading-none">&#xBB;</span>
+                <span className="text-slate-200 hover:text-[#f5c800] cursor-pointer transition-colors font-medium">{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      {/* Copyright */}
-      <div className="max-w-[1500px] mx-auto px-6 sm:px-8 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-blue-300 gap-4">
-        <p>© {new Date().getFullYear()} Kiran Global — M.S. Jain Group. All rights reserved.</p>
-        <div className="flex gap-6">
-          <span className="hover:text-[#f5c800] cursor-pointer transition-colors">Privacy Policy</span>
-          <span className="hover:text-[#f5c800] cursor-pointer transition-colors">Terms & Conditions</span>
-          <span className="hover:text-[#f5c800] cursor-pointer transition-colors">Sitemap</span>
+      {/* Copyright Bar */}
+      <div className="max-w-[1700px] mx-auto px-6 sm:px-10 py-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px]">
+        <p className="text-slate-300">Copyright &copy; 2018 Kiran Global Chem Limited.</p>
+        <div className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6 font-semibold">
+          {bottomLinks.map((link) => (
+            <a key={link} href="#" className="text-slate-300 hover:text-[#f5c800] transition-colors">
+              {link
+            }</a>
+          ))}
         </div>
       </div>
     </footer>
