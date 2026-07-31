@@ -102,7 +102,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link
               href="/"
-              onClick={() => setActiveNav("home")}
+              onClick={() => { setActiveNav("home"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               className="relative flex items-center h-14 w-14 shrink-0"
             >
               <Image
@@ -118,8 +118,8 @@ export default function Navbar() {
             <nav className="hidden lg:flex items-center gap-1.5">
               {/* Home */}
               <Link
-                href="/#home"
-                onClick={() => setActiveNav("home")}
+                href="/"
+                onClick={() => { setActiveNav("home"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                 className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${activeNav === "home"
                   ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                   : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
@@ -288,18 +288,7 @@ export default function Navbar() {
         >
           <div className="bg-white border-t border-slate-100 px-5 pb-6 pt-3 flex flex-col gap-1.5 shadow-2xl shadow-blue-900/10">
             {/* Home */}
-            <Link
-              href="/#home"
-              onClick={() => {
-                setActiveNav("home");
-                setMobileMenuOpen(false);
-              }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${activeNav === "home" ? "bg-[#0072CE] text-white" : "text-[#003d7a] bg-slate-50"
-                }`}
-            >
-              <span className={`h-2 w-2 rounded-full ${activeNav === "home" ? "bg-[#f5c800]" : "bg-slate-300"}`} />
-              Home
-            </Link>
+
 
             {/* About Us Accordion */}
             <div className="flex flex-col">
