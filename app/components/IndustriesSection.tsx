@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import AnimatedCounter from "./AnimatedCounter";
 import {
   Car,
   UtensilsCrossed,
@@ -22,6 +24,7 @@ const INDUSTRIES = [
     image: "/home-ab2.webp",
     accentColor: "#60a5fa",
     tag: "Manufacturing",
+    href: "/industries/automotive-repair",
   },
   {
     id: "food",
@@ -30,6 +33,7 @@ const INDUSTRIES = [
     image: "/sodium-silicate-lumps.webp",
     accentColor: "#fbbf24",
     tag: "Processing",
+    href: "/industries/food-industry",
   },
   {
     id: "timber",
@@ -38,6 +42,7 @@ const INDUSTRIES = [
     image: "/Why-Choose-Us.webp",
     accentColor: "#4ade80",
     tag: "Treatment",
+    href: "/industries/timber-treatment",
   },
   {
     id: "mining",
@@ -46,6 +51,7 @@ const INDUSTRIES = [
     image: "/premium-potassium-silicate-liquid.webp",
     accentColor: "#fb923c",
     tag: "Extraction",
+    href: "/industries",
   },
   {
     id: "adhesives",
@@ -54,6 +60,7 @@ const INDUSTRIES = [
     image: "/potassium-silicate-lumps.webp",
     accentColor: "#c084fc",
     tag: "Chemical",
+    href: "/industries/adhesives",
   },
   {
     id: "water",
@@ -62,6 +69,7 @@ const INDUSTRIES = [
     image: "/2.jpg",
     accentColor: "#38bdf8",
     tag: "Treatment",
+    href: "/industries/water-treatment",
   },
   {
     id: "foundries",
@@ -70,6 +78,7 @@ const INDUSTRIES = [
     image: "/sodium-silicate-liquid.webp",
     accentColor: "#f87171",
     tag: "Metallurgy",
+    href: "/industries/foundries",
   },
   {
     id: "soap",
@@ -78,6 +87,7 @@ const INDUSTRIES = [
     image: "/SUSTAINABILITY.webp",
     accentColor: "#22d3ee",
     tag: "Chemical",
+    href: "/industries/soap-and-detergents",
   },
   {
     id: "petroleum",
@@ -86,6 +96,7 @@ const INDUSTRIES = [
     image: "/home-slider.webp",
     accentColor: "#fde68a",
     tag: "Energy",
+    href: "/industries/petroleum-and-oil-drilling",
   },
 ];
 
@@ -148,11 +159,12 @@ export default function IndustriesSection() {
             const isHovered = hovered === industry.id;
 
             return (
-              <div
+              <Link
                 key={industry.id}
+                href={industry.href}
                 onMouseEnter={() => setHovered(industry.id)}
                 onMouseLeave={() => setHovered(null)}
-                className={`group bg-white rounded-2xl overflow-hidden cursor-pointer transition-all duration-400 ${
+                className={`group bg-white rounded-2xl overflow-hidden cursor-pointer transition-all duration-400 block ${
                   isHovered
                     ? "shadow-xl -translate-y-1.5 ring-2 ring-[#0072CE]/20"
                     : "shadow-md ring-1 ring-slate-200"
@@ -204,7 +216,7 @@ export default function IndustriesSection() {
                     style={{ backgroundColor: industry.accentColor }}
                   />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -212,16 +224,18 @@ export default function IndustriesSection() {
         {/* Bottom stats strip */}
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { label: "Industries Served", value: "24+" },
-            { label: "Countries", value: "25+" },
-            { label: "Years Experience", value: "45+" },
-            { label: "Satisfied Clients", value: "500+" },
+            { label: "Industries Served", target: 24, suffix: "+" },
+            { label: "Countries", target: 25, suffix: "+" },
+            { label: "Years Experience", target: 45, suffix: "+" },
+            { label: "Satisfied Clients", target: 500, suffix: "+" },
           ].map((s) => (
             <div
               key={s.label}
               className="bg-white border border-slate-200 rounded-2xl p-5 text-center hover:border-[#0072CE]/30 hover:shadow-md transition-all duration-300"
             >
-              <div className="text-2xl font-black text-[#003d7a]">{s.value}</div>
+              <div className="text-2xl font-black text-[#003d7a]">
+                <AnimatedCounter target={s.target} suffix={s.suffix} />
+              </div>
               <div className="text-[11px] font-semibold text-slate-500 mt-1 uppercase tracking-wider">
                 {s.label}
               </div>

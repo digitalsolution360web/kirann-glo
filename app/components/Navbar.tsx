@@ -6,40 +6,40 @@ import Link from "next/link";
 import { Phone, Mail, Menu, X, ChevronDown } from "lucide-react";
 
 export const ABOUT_DROPDOWN_LINKS = [
-  { label: "VISION & MISSION", href: "/vision-mission" },
-  { label: "CHAIRMAN’S MESSAGE", href: "/chairmans-message" },
-  { label: "HISTORY", href: "/history" },
-  { label: "MANAGEMENT", href: "/management" },
-  { label: "AWARDS AND ACHIEVEMENTS", href: "/awards-and-achievements" },
-  { label: "ISO 9001:2015 CERTIFICATION", href: "/about" },
+  { label: "Vision & Mission", href: "/vision-mission" },
+  { label: "Chairman’s Message", href: "/chairmans-message" },
+  { label: "History", href: "/history" },
+  { label: "Management", href: "/management" },
+  { label: "Awards & Achievements", href: "/awards-and-achievements" },
+  { label: "ISO 9001:2015 Certification", href: "/about" },
   { label: "FAQ", href: "/faq-page" },
-  { label: "AGM NOTICE", href: "/about" },
-  { label: "POLICY", href: "/about" },
-  { label: "TERMS & CONDITIONS", href: "/about" },
+  { label: "AGM Notice", href: "/about" },
+  { label: "Policy", href: "/about" },
+  { label: "Terms & Conditions", href: "/about" },
 ];
 
 export const INDUSTRIES_DROPDOWN_LINKS = [
-  { label: "SOAP & DETERGENTS", href: "#" },
-  { label: "COSMETICS", href: "#" },
-  { label: "AGRICULTURE", href: "#" },
-  { label: "TIMBER TREATMENT", href: "#" },
-  { label: "ADHESIVES", href: "#" },
-  { label: "AUTOMOTIVE REPAIR", href: "#" },
-  { label: "FOOD INDUSTRY", href: "#" },
-  { label: "WATER TREATMENT", href: "#" },
-  { label: "FOUNDRIES", href: "#" },
-  { label: "PETROLEUM & OIL DRILLING", href: "#" },
-  { label: "CONCRETE AND GENERAL", href: "#" },
-  { label: "CHEMICAL INJECTION", href: "#" },
-  { label: "METALS", href: "#" },
-  { label: "CERAMICS & REFRACTORY", href: "#" },
+  { label: "Soap & Detergents", href: "/industries/soap-and-detergents" },
+  { label: "Cosmetics", href: "/industries/cosmetics" },
+  { label: "Agriculture", href: "/industries/agriculture" },
+  { label: "Timber Treatment", href: "/industries/timber-treatment" },
+  { label: "Adhesives", href: "/industries/adhesives" },
+  { label: "Automotive Repair", href: "/industries/automotive-repair" },
+  { label: "Food Industry", href: "/industries/food-industry" },
+  { label: "Water Treatment", href: "/industries/water-treatment" },
+  { label: "Foundries", href: "/industries/foundries" },
+  { label: "Petroleum & Oil Drilling", href: "/industries/petroleum-and-oil-drilling" },
+  { label: "Concrete & General", href: "/industries/concrete-and-general" },
+  { label: "Chemical Injection", href: "/industries/chemical-injection" },
+  { label: "Metals", href: "/industries/metals" },
+  { label: "Ceramics & Refractory", href: "/industries/ceramics-and-refractory" },
 ];
 
 export const PRODUCTS_DROPDOWN_LINKS = [
-  { label: "SODIUM SILICATE LUMPS", href: "#" },
-  { label: "SODIUM SILICATE LIQUID", href: "#" },
-  { label: "POTASSIUM SILICATE LUMPS", href: "#" },
-  { label: "POTASSIUM SILICATE LIQUID", href: "#" },
+  { label: "Sodium Silicate Lumps", href: "/products/sodium-silicate-lumps" },
+  { label: "Sodium Silicate Liquid", href: "/products/sodium-silicate-liquid" },
+  { label: "Potassium Silicate Lumps", href: "/products/potassium-silicate-lumps" },
+  { label: "Potassium Silicate Liquid", href: "/products/potassium-silicate-liquid" },
 ];
 
 export default function Navbar() {
@@ -98,7 +98,7 @@ export default function Navbar() {
         <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#0072CE] via-[#f5c800] to-[#0072CE] opacity-70" />
 
         <div className="w-full max-w-[1700px] mx-auto px-8 sm:px-8">
-          <div className="flex items-center justify-between py-2.5">
+          <div className="flex items-center justify-between py-4.5">
             {/* Logo */}
             <Link
               href="/"
@@ -120,7 +120,7 @@ export default function Navbar() {
               <Link
                 href="/"
                 onClick={() => { setActiveNav("home"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${activeNav === "home"
+                className={`px-4 py-2 text-base font-bold rounded-lg transition-all duration-200 ${activeNav === "home"
                   ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                   : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                   }`}
@@ -133,27 +133,25 @@ export default function Navbar() {
                 <Link
                   href="/about"
                   onClick={() => setActiveNav("about")}
-                  className={`px-4 py-2 text-sm font-semibold rounded-lg flex items-center gap-1.5 transition-all duration-200 ${activeNav === "about"
+                  className={`px-4 py-2 text-base font-bold rounded-lg flex items-center gap-1.5 transition-all duration-200 ${activeNav === "about"
                     ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                     : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                     }`}
                 >
                   About Us
-                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
+                  <ChevronDown size={15} className="group-hover:rotate-180 transition-transform duration-300" />
                 </Link>
                 {/* Dropdown Menu */}
-                <div className="absolute left-0 mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
-                  <div className="py-2">
-                    {ABOUT_DROPDOWN_LINKS.map((link) => (
-                      <Link
-                        key={link.label}
-                        href={link.href}
-                        className="block px-5 py-3 text-xs font-bold text-[#003d7a] hover:text-white hover:bg-[#0072CE] transition-all duration-150 border-b border-slate-100 last:border-b-0"
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
+                <div className="absolute left-0 mt-1 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1">
+                  {ABOUT_DROPDOWN_LINKS.map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="block px-4 py-4 text-sm font-bold text-black rounded-lg hover:text-white hover:bg-[#0072CE] transition-colors duration-150"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
               </div>
 
@@ -162,27 +160,25 @@ export default function Navbar() {
                 <Link
                   href="/industries"
                   onClick={() => setActiveNav("industries")}
-                  className={`px-4 py-2 text-sm font-semibold rounded-lg flex items-center gap-1.5 transition-all duration-200 ${activeNav === "industries"
+                  className={`px-4 py-2 text-base font-bold rounded-lg flex items-center gap-1.5 transition-all duration-200 ${activeNav === "industries"
                     ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                     : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                     }`}
                 >
                   Industries We Serve
-                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
+                  <ChevronDown size={15} className="group-hover:rotate-180 transition-transform duration-300" />
                 </Link>
-                {/* Dropdown Menu */}
-                <div className="absolute left-0 mt-1 w-72 bg-white border border-slate-200 rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden max-h-[480px] overflow-y-auto">
-                  <div className="py-2">
-                    {INDUSTRIES_DROPDOWN_LINKS.map((link) => (
-                      <Link
-                        key={link.label}
-                        href={link.href}
-                        className="block px-5 py-3 text-xs font-bold text-[#003d7a] hover:text-white hover:bg-[#0072CE] transition-all duration-150 border-b border-slate-100 last:border-b-0"
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
+                {/* 2-Column Dropdown Menu — Fits all 14 links cleanly */}
+                <div className="absolute left-0 mt-1 w-[560px] bg-white border border-slate-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-3 grid grid-cols-2 gap-1">
+                  {INDUSTRIES_DROPDOWN_LINKS.map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="block px-3.5 py-4 text-sm font-bold text-black rounded-lg hover:text-white hover:bg-[#0072CE] transition-colors duration-150"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
               </div>
 
@@ -191,27 +187,25 @@ export default function Navbar() {
                 <Link
                   href="/products-page"
                   onClick={() => setActiveNav("products")}
-                  className={`px-4 py-2 text-sm font-semibold rounded-lg flex items-center gap-1.5 transition-all duration-200 ${activeNav === "products"
+                  className={`px-4 py-2 text-base font-bold rounded-lg flex items-center gap-1.5 transition-all duration-200 ${activeNav === "products"
                     ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                     : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                     }`}
                 >
                   Products
-                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
+                  <ChevronDown size={15} className="group-hover:rotate-180 transition-transform duration-300" />
                 </Link>
                 {/* Dropdown Menu */}
-                <div className="absolute left-0 mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
-                  <div className="py-2">
-                    {PRODUCTS_DROPDOWN_LINKS.map((link) => (
-                      <Link
-                        key={link.label}
-                        href={link.href}
-                        className="block px-5 py-3 text-xs font-bold text-[#003d7a] hover:text-[#0072CE] hover:bg-slate-50 transition-all duration-150 border-b border-slate-100 last:border-b-0 uppercase"
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
+                <div className="absolute left-0 mt-1 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1">
+                  {PRODUCTS_DROPDOWN_LINKS.map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="block px-4 py-4 text-sm font-bold text-black rounded-lg hover:text-white hover:bg-[#0072CE] transition-colors duration-150"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
               </div>
 
@@ -221,7 +215,7 @@ export default function Navbar() {
               <Link
                 href="/careers"
                 onClick={() => setActiveNav("careers")}
-                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${activeNav === "careers"
+                className={`px-4 py-2 text-base font-bold rounded-lg transition-all duration-200 ${activeNav === "careers"
                   ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                   : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                   }`}
@@ -233,7 +227,7 @@ export default function Navbar() {
               <Link
                 href="/gallery"
                 onClick={() => setActiveNav("gallery")}
-                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${activeNav === "gallery"
+                className={`px-4 py-2 text-base font-bold rounded-lg transition-all duration-200 ${activeNav === "gallery"
                   ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                   : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                   }`}
@@ -245,7 +239,7 @@ export default function Navbar() {
               <Link
                 href="/blog"
                 onClick={() => setActiveNav("blog")}
-                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${activeNav === "blog"
+                className={`px-4 py-2 text-base font-bold rounded-lg transition-all duration-200 ${activeNav === "blog"
                   ? "text-white bg-[#0072CE] shadow-md shadow-blue-700/30"
                   : "text-[#003d7a] hover:text-white hover:bg-[#0072CE]"
                   }`}
@@ -453,19 +447,6 @@ export default function Navbar() {
               Blog
             </Link>
 
-            {/* FAQ */}
-            <Link
-              href="/#faq"
-              onClick={() => {
-                setActiveNav("faq");
-                setMobileMenuOpen(false);
-              }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${activeNav === "faq" ? "bg-[#0072CE] text-white" : "text-[#003d7a] bg-slate-50"
-                }`}
-            >
-              <span className={`h-2 w-2 rounded-full ${activeNav === "faq" ? "bg-[#f5c800]" : "bg-slate-300"}`} />
-              FAQ
-            </Link>
 
             <a
               href="#contact"

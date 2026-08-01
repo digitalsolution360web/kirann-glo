@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { MapPin, Mail, Phone } from "lucide-react";
 
 const companyQuickInfo = [
@@ -18,21 +19,20 @@ const companyQuickInfo = [
 ];
 
 const industriesWeServe = [
-  "SOAP & DETERGENTS",
-  "AGRICULTURE",
-  "COSMETICS",
-  "CONCRETE AND GENERAL",
-  "CERAMICS & REFRACTORY",
-  "METALS",
-  "CHEMICAL INJECTION",
-  "PETROLEUM & OIL DRILLING",
-  "FOUNDRIES",
-  "WATER TREATMENT",
-  "ADHESIVES",
-  "MINING AND MINERAL PROCESSING",
-  "TIMBER TREATMENT",
-  "FOOD INDUSTRY",
-  "AUTOMOTIVE REPAIR",
+  { name: "SOAP & DETERGENTS", href: "/industries/soap-and-detergents" },
+  { name: "AGRICULTURE", href: "/industries/agriculture" },
+  { name: "COSMETICS", href: "/industries/cosmetics" },
+  { name: "TIMBER TREATMENT", href: "/industries/timber-treatment" },
+  { name: "ADHESIVES", href: "/industries/adhesives" },
+  { name: "AUTOMOTIVE REPAIR", href: "/industries/automotive-repair" },
+  { name: "FOOD INDUSTRY", href: "/industries/food-industry" },
+  { name: "WATER TREATMENT", href: "/industries/water-treatment" },
+  { name: "FOUNDRIES", href: "/industries/foundries" },
+  { name: "PETROLEUM & OIL DRILLING", href: "/industries/petroleum-and-oil-drilling" },
+  { name: "CONCRETE AND GENERAL", href: "/industries/concrete-and-general" },
+  { name: "CHEMICAL INJECTION", href: "/industries/chemical-injection" },
+  { name: "METALS", href: "/industries/metals" },
+  { name: "CERAMICS & REFRACTORY", href: "/industries/ceramics-and-refractory" },
 ];
 
 const bottomLinks = [
@@ -145,9 +145,11 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2 text-xs">
             {industriesWeServe.map((item) => (
-              <li key={item} className="flex items-center gap-2">
+              <li key={item.name} className="flex items-center gap-2">
                 <span className="text-[#f5c800] font-black text-sm leading-none">&#xBB;</span>
-                <span className="text-white hover:text-[#f5c800] cursor-pointer transition-colors font-semibold">{item}</span>
+                <Link href={item.href} className="text-white hover:text-[#f5c800] cursor-pointer transition-colors font-semibold">
+                  {item.name}
+                </Link>
               </li>
             ))}
           </ul>

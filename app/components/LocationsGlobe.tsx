@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Globe } from "lucide-react";
 import * as THREE from "three";
+import AnimatedCounter from "./AnimatedCounter";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import {
   CSS2DRenderer,
@@ -384,9 +385,9 @@ const LocationsGlobe = () => {
               className="flex items-center justify-between gap-2 px-5 py-4 rounded-2xl border border-[#f5c800]/40 bg-[#001e4d]/90 shadow-[0_4px_24px_rgba(245,200,0,0.1)]"
             >
               {[
-                { value: "4", label: "Continents" },
-                { value: "20+", label: "Countries" },
-                { value: "24/7", label: "Support" },
+                { label: "Continents", isNumeric: true, target: 4, suffix: "" },
+                { label: "Countries", isNumeric: true, target: 20, suffix: "+" },
+                { label: "Support", isNumeric: false, value: "24/7" },
               ].map((stat, i) => (
                 <React.Fragment key={stat.label}>
                   {i > 0 && (
@@ -394,7 +395,11 @@ const LocationsGlobe = () => {
                   )}
                   <div className="text-center flex-1">
                     <div className="text-[#f5c800] font-black text-[22px] leading-none tracking-tight">
-                      {stat.value}
+                      {stat.isNumeric ? (
+                        <AnimatedCounter target={stat.target!} suffix={stat.suffix} />
+                      ) : (
+                        stat.value
+                      )}
                     </div>
                     <div className="text-blue-200 text-[9px] uppercase font-bold tracking-[0.15em] mt-1">
                       {stat.label}

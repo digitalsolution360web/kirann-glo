@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Quote } from "lucide-react";
+import AnimatedCounter from "./AnimatedCounter";
 
 const TESTIMONIALS = [
   {
@@ -206,9 +207,9 @@ export default function TestimonialsSection() {
         {/* Bottom badges row */}
         <div className="mt-14 flex flex-wrap justify-center gap-6">
           {[
-            { label: "Happy Clients", value: "500+" },
-            { label: "Countries Served", value: "25+" },
-            { label: "Years of Trust", value: "20+" },
+            { label: "Happy Clients", target: 500, suffix: "+" },
+            { label: "Countries Served", target: 25, suffix: "+" },
+            { label: "Years of Trust", target: 20, suffix: "+" },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -216,7 +217,7 @@ export default function TestimonialsSection() {
             >
               <div className="w-2 h-2 rounded-full bg-[#0072CE]" />
               <span className="text-xl font-black text-[#003d7a]">
-                {stat.value}
+                <AnimatedCounter target={stat.target} suffix={stat.suffix} />
               </span>
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {stat.label}

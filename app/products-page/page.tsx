@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -11,24 +12,26 @@ const products = [
     category: "SODIUM SILICATE",
     title: "Sodium Silicate Lumps",
     type: "SOLID FORM",
-    image: "/sodium-silicate-solidd.webp",
+    image: "/sodium-silicate-lumps.webp",
     tagline: "Market Leader in India · Recognized Globally",
     description:
       "At Kiran Global Chems Ltd. we produce sodium silicate lumps that are manufactured using top grade raw materials and have superior properties, both physical and chemical. We are the market leader in India and our brand is recognized globally for its high performance.",
     accent: "#0072CE",
     badge: "LUMPS",
+    href: "/products/sodium-silicate-lumps",
   },
   {
     id: "02",
     category: "SODIUM SILICATE",
     title: "Sodium Silicate Liquid",
     type: "LIQUID FORM",
-    image: "/sodium-silicate-liquid.webp",
+    image: "/sodium-silicate-liquidd.webp",
     tagline: "Precision Formulated · Industrial Grade",
     description:
       "At Kiran Global Chem Ltd. we offer sodium silicate in liquid form for specific industrial application where the liquid property of the chemical is highly effective. We manufacture high quality silicates that are produced to match our customer's expectations.",
     accent: "#0072CE",
     badge: "LIQUID",
+    href: "/products/sodium-silicate-liquid",
   },
   {
     id: "03",
@@ -41,6 +44,7 @@ const products = [
       "At Kiran Global Chem Ltd. we manufacture potassium silicate lumps of the highest quality. Our product is recognized industry-wide for its high performance and seamless integration.",
     accent: "#003d7a",
     badge: "LUMPS",
+    href: "/products/potassium-silicate-lumps",
   },
   {
     id: "04",
@@ -53,6 +57,7 @@ const products = [
       "Kiran Global Chems Ltd. is a leading brand name in India in the manufacture and supply of potassium silicate liquid. Our industry-grade potassium silicate liquid is available in a range of ratios and concentrations based on the specific business requirements of our clients.",
     accent: "#003d7a",
     badge: "LIQUID",
+    href: "/products/potassium-silicate-liquid",
   },
 ];
 
@@ -150,14 +155,18 @@ export default function ProductsPage() {
                   </p>
 
                   {/* Bottom action row */}
-                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-black uppercase tracking-widest">
-                      {product.type}
-                    </span>
-                    <a
-                      href="#contact"
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <Link
+                      href={product.href}
                       className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-white px-4 py-2 rounded-full transition-all duration-200 hover:opacity-90 hover:shadow-lg"
                       style={{ backgroundColor: product.accent }}
+                    >
+                      View Details
+                    </Link>
+                    <a
+                      href="#contact"
+                      className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest border-2 px-4 py-2 rounded-full transition-all duration-200 hover:shadow-md"
+                      style={{ borderColor: product.accent, color: product.accent }}
                     >
                       Enquire Now
                     </a>
